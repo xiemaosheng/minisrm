@@ -61,6 +61,7 @@
                         添加商品图片
                     </td>
                     <td>
+                        <input type="text" name="goodImgUrl" id="goodImgUrl"/>
                         <button type="button" class="layui-btn" id="uploadPicture">
                             <i class="layui-icon">&#xe67c;</i>上传图片
                         </button>
@@ -301,9 +302,11 @@
             //执行实例
             var uploadPicture = upload.render({
                 elem: '#uploadPicture' //绑定元素
-                ,url: '/upload/picture' //上传接口
-                ,done: function(res){
-                //上传完毕回调
+                ,url: '/file/upload' //上传接口
+                ,done: function(res,index,upload){
+                    //上传完毕回调
+                    $("#goodImgUrl").val(res.fileName);
+                    console.log(res.fileName);
                 }
                 ,error: function(){
                 //请求异常回调
@@ -311,7 +314,7 @@
             });
             var uploadCommentPicture = upload.render({
                 elem: '#uploadCommentPicture' //绑定元素
-                ,url: '/upload/commentPicture' //上传接口
+                ,url: '/file/upload' //上传接口
                 ,done: function(res){
                 //上传完毕回调
                 }
@@ -321,7 +324,7 @@
             });
             var uploadCommentVideo = upload.render({
                 elem: '#uploadCommentVideo' //绑定元素
-                ,url: '/upload/commentVideo' //上传接口
+                ,url: '/file/upload' //上传接口
                 ,done: function(res){
                 //上传完毕回调
                 }

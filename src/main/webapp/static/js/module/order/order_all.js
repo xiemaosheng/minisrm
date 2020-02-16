@@ -30,6 +30,7 @@ $(function() {
                 {type: 'checkbox',fixed:'left'}
                 ,{field:'id', title:'编号',align:'center'}
                 ,{field:'recDateTime', title:'接单日期',align:'center'}
+                ,{field:'goodImgUrl', title:'图片',align:'center',templet:'<div><img src="{{ d.goodImgUrl }}"></div>'}
                 ,{field:'website', title:'站点',align:'center'}
                 ,{field:'mktName', title:'店铺名称',align:'center'}
                 ,{field:'ASIN', title: 'ASIN',align:'center'}

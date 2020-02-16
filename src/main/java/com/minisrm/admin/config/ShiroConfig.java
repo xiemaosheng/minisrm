@@ -161,6 +161,7 @@ public class ShiroConfig {
         hashMap.put("/dologin", "anon");
         hashMap.put("/global/sessionError", "anon");
         hashMap.put("/kaptcha", "anon");
+        hashMap.put("/temp-rainy/**", "anon");
         hashMap.put("/**", "user");
         shiroFilter.setFilterChainDefinitionMap(hashMap);
         return shiroFilter;
