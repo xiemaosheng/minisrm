@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.minisrm.admin.mapper.OrderReviewMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.minisrm.admin.model.OrderReview">
+        <result column="id" property="id"/>
+        <result column="orderId" property="orderId"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="reviewImgUrl" property="reviewImgUrl"/>
+        <result column="reviewVideoUrl" property="reviewVideoUrl"/>
+        <result column="reviewLinkUrl" property="reviewLinkUrl"/>
+        <result column="reviewJtUrl" property="reviewJtUrl"/>
+        <result column="reviewUserId" property="reviewUserId"/>
+        <result column="reviewUserName" property="reviewUserName"/>
+        <result column="reviewDateTime" property="reviewDateTime"/>
+        <result column="reviewPlanDateTime" property="reviewPlanDateTime"/>
+        <result column="createTime" property="createTime"/>
+        <result column="updateTime" property="updateTime"/>
+    </resultMap>
+
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="condition.id"  keyColumn="id">
+        insert into srm_order_review (orderId,
+        title,
+        content,
+        reviewImgUrl,
+        reviewVideoUrl,
+        reviewLinkUrl,
+        reviewJtUrl,
+        reviewUserId,
+        reviewUserName,
+        reviewDateTime,
+        reviewPlanDateTime,
+        createTime,
+        updateTime)
+        values (#{condition.orderId},
+        #{condition.title},
+        #{condition.content},
+        #{condition.reviewImgUrl},
+        #{condition.reviewVideoUrl},
+        #{condition.reviewLinkUrl},
+        #{condition.reviewJtUrl},
+        #{condition.reviewUserId},
+        #{condition.reviewUserName},
+        #{condition.reviewDateTime},
+        #{condition.reviewPlanDateTime},
+        #{condition.createTime},
+        #{condition.updateTime})
+    </insert>
+</mapper>

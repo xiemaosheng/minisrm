@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.minisrm.admin.mapper.TestMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.minisrm.admin.model.Test">
+        <result column="name" property="name"/>
+        <result column="mobile" property="mobile"/>
+        <result column="updateTime" property="updateTime"/>
+    </resultMap>
+
+
+    <select id="selectList" resultMap="BaseResultMap">
+        select
+        t.name,t.mobile
+        from srm_test t
+        where 1=1
+        <if test="condition.name != null and condition.name != ''">
+            and t.name like '%' || #{condition.name} || '%'
+        </if>
+        <if test="condition.mobile != null and condition.mobile != ''">
+            and t.mobile like '%' || #{condition.mobile} || '%'
+        </if>
+        order by
+        <choose>
+            <when test="orderBy != null and orderBy != ''">
+                ${orderBy}
+            </when>
+            <otherwise>
+                updateTime desc
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        t.name,t.mobile
+        from srm_test t
+    </select>
+</mapper>

@@ -1,0 +1,21 @@
+<div class="left-nav">
+    <div id="side-nav">
+        <ul th:each="menu : ${menus}" id="nav">
+            <li th:if="${menu.menuName != null}" >
+                <a href="javascript:;">
+                    <i class="iconfont">&#xe726;</i>
+                    <cite th:text="${menu.menuName}"></cite>
+                    <i class="iconfont nav_right">&#xe6a7;</i>
+                </a>
+                <ul class="sub-menu">
+                    <li th:each="children : ${menu.subMenuList}" >
+                        <a th:_href="${children.url}">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite th:text="${children.menuName}"></cite>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>

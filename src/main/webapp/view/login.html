@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>营销管理系统</title>
+<link rel="shortcut icon" th:href="@{/static/img/favicon.ico}" type="image/x-icon" />
+<link th:href="@{/static/css/toastr/toastr.min.css}" rel="stylesheet"/>
+<link th:href="@{/static/css/font-awesome.min.css}" rel="stylesheet"/>
+<link th:href="@{/static/css/login.css}" rel="stylesheet" />
+<script type="text/javascript">
+if (window != top) top.location.href = location.href;
+</script>
+</head>
+
+<body>
+<dl class="admin_login">
+  <dt style="height: 52px;"> 
+    <img th:src="@{/static/img/images/favicon.ico}" style="width: 40px;">
+    <span>营销管理系统</span>
+   </dt>
+  
+  <dd class="user_icon">
+    <i class="fa fa-fw fa-user"></i>
+    <input type="text" name="username" placeholder="请输入账号" class="login_txtbx"/>
+  </dd>
+  <dd class="pwd_icon">
+    <i class="fa fa-fw fa-lock"></i>
+    <input type="password" name="password" placeholder="请输入密码" class="login_txtbx"/>
+  </dd>
+  <dd class="val_icon" th:if="${kaptchaFlag==true}">
+    <div class="checkcode" style="text-align: right;">
+        <i class="fa fa-fw fa-key"></i>
+      <input type="text" id="J_codetext" name="kaptcha" placeholder="请输入验证码" maxlength="4" class="login_txtbx">
+    </div>
+    <img class="J_codeimg" th:src="@{/kaptcha}" id="kaptchaImage" title="点击刷新" style="cursor: pointer;"/> 
+    <input type="button" value="点击,换一张" class="ver_btn" onclick="$(this).prev().find('img').click()">
+  </dd>
+  <dd>
+  	<input name="kaptchaFlag" type="hidden" th:value="${kaptchaFlag}"/>
+    <input type="button" value="立即登录" class="submit_btn"/>
+  </dd>
+</dl>
+<script th:src="@{/static/js/plugin/jquery.min.js?v=2.1.4}"></script>
+<script th:src="@{/static/js/plugin/layer/layer.js}"></script>
+<script th:src="@{/static/js/plugin/particleground/jquery.particleground.min.js}"></script>
+<script th:src="@{/static/js/plugin/toastr/toastr.min.js}"></script>
+<script th:src="@{/static/js/common/base.js}"></script>
+<script th:src="@{/static/js/login.js}"></script>
+</body>
+</html>

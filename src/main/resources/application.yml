@@ -1,0 +1,18 @@
+server:
+  port: 8080
+
+spring:
+  profiles:
+    active: dev
+  mvc:
+    static-path-pattern: /static/**
+  thymeleaf:
+    prefix: classpath:/view/
+    suffix: .html
+    mode: html
+    cache: false
+
+mybatis:
+  identity: MYSQL
+  mapper-locations:
+    - classpath*:com/minisrm/admin/**/mapping/*.xml

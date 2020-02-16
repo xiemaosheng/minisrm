@@ -1,0 +1,71 @@
+<!--右侧部分开始-->
+<style>
+<!--
+.dropdown-menu .fa{margin-right: 6px; font-size: 14px;}
+-->
+</style>
+<div class="row border-bottom">
+    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0;">
+        <ul class="nav navbar-top-links navbar-left">
+            <li class="nav-top-btn">
+                <a href="#" class="navbar-minimalize"><i class="fa fa-arrow-left"></i> </a>
+            </li>
+        </ul>
+        <ul class="nav navbar-top-links navbar-right" style="margin-right: 0px;">
+            <li class="dropdown" style="margin-right: -5px;">
+                <a class="dropdown-toggle user-info" data-toggle="dropdown" href="#">
+                    您好，<i class="fa fa-user" style="margin-right: 6px;" th:text="${userName}"></i>欢迎登录产品管理后台
+                </a>
+                <ul class="dropdown-menu dropdown-messages" style="width: 180px; text-align: center;">
+                    <li>
+                        <div class="dropdown profile-element">
+                            <span><img alt="image" class="img-circle" th:src="@{/static/img/default.png}" style="width: 55px;"/></span>
+                            <span class="block m-t-xs block"><strong class="font-bold"><label th:text="${userName}" />(<label th:text="${userId}" />)</strong></span>
+                            <span class="text-muted text-xs block" style="padding: 3px;">管理员</span>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-top-btn">
+                <a href="javascript:void(0);" onclick="Base.logout();"><i class="fa fa-sign-out"></i></a>
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+<div class="row content-tabs">
+    <button class="roll-nav roll-left J_tabLeft"><i class="fa fa-chevron-left"></i>
+    </button>
+    <nav class="page-tabs J_menuTabs">
+        <div class="page-tabs-content">
+            <!--<a href="javascript:;" class="active J_menuTab" data-id="index_v1.html">首页</a>-->
+        </div>
+    </nav>
+    <button class="roll-nav roll-right J_tabRight"><i class="fa fa-chevron-right"></i>
+    </button>
+    <div class="btn-group roll-nav roll-right">
+        <button class="dropdown J_tabClose" data-toggle="dropdown"><i class="fa fa-caret-down"></i>
+
+        </button>
+        <ul role="menu" class="dropdown-menu dropdown-menu-right" style="min-width: 40px;">
+            <li class="J_tabRefreshCur"><a><i class="fa fa-fw fa-refresh"></i>刷新当前</a></li>
+            <li class="J_tabRefreshAll"><a><i class="fa fa-fw fa-retweet"></i>刷新所有</a></li>
+            <!--<li class="divider"></li>-->
+            <!--<li class="J_tabFavorite"><a><i class="fa fa-fw fa-star"></i>收藏当前</a></li>-->
+            <!--<li class="J_tabShowActive"><a><i class="fa fa-fw fa-crosshairs"></i>定位当前</a></li>-->
+            <!--<li class="divider"></li>-->
+            <!--<li class="J_tabCloseAll"><a><i class="fa fa-fw fa-close"></i>关闭全部</a>-->
+            <!--</li>-->
+            <!--<li class="J_tabCloseOther"><a><i class="fa fa-fw fa-times-circle-o"></i>关闭其他</a>-->
+            <!--</li>-->
+        </ul>
+    </div>
+    <a class="roll-nav roll-right J_tabRefreshCur"><i class="fa fa-refresh"></i></a>
+</div>
+<div class="row J_mainContent" id="content-main">
+    <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="welcome" frameborder="0" seamless></iframe>
+</div>
+<div class="footer">
+    <div class="text-center">技术支持： <a href="http://www.giveu.cn/" target="_blank">深圳风豹互联网科技有限公司</a></div>
+</div>
+<!--右侧部分结束-->

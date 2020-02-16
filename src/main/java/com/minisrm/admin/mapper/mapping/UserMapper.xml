@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.minisrm.admin.mapper.UserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.minisrm.admin.model.User">
+        <result column="id" property="id"/>
+        <result column="userName" property="userName"/>
+        <result column="email" property="email"/>
+        <result column="userMobile" property="userMobile"/>
+        <result column="userStatus" property="userStatus"/>
+        <result column="password" property="password"/>
+        <result column="createTime" property="createTime"/>
+        <result column="updateTime" property="updateTime"/>
+    </resultMap>
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="condition.id"  keyColumn="id">
+        insert into srm_user (userName,userMobile,email,userStatus,password,createTime,updateTime)
+        values (#{condition.userName},
+        #{condition.userMobile},
+        #{condition.email},
+        #{condition.userStatus},
+        #{condition.password},
+        #{condition.createTime},
+        #{condition.updateTime})
+    </insert>
+
+    <update id="updateStatus">
+        update srm_user
+        <set>
+            <if test="status != null">
+                userStatus = #{status},
+            </if>
+        </set>
+        WHERE id = #{userId}
+    </update>
+
+    <delete id ="deleteById">
+        delete srm_user
+        where id = #{userId}
+    </delete>
+
+    <select id="selectList" resultMap="BaseResultMap">
+        SELECT
+        t.*, r.roleName
+        FROM
+        srm_user t
+        INNER JOIN srm_user_role ur ON t.id = ur.userId
+        INNER JOIN srm_role r on r.id = ur.roleId
+        where 1=1
+        <if test="condition.userName != null and condition.userName != ''">
+            and t.userName like '%' || #{condition.userName} || '%'
+        </if>
+        order by
+        <choose>
+            <when test="orderBy != null and orderBy != ''">
+                ${orderBy}
+            </when>
+            <otherwise>
+                updateTime desc
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="getLoginUser" resultMap="BaseResultMap">
+        select
+        t.*
+        from srm_user t
+        where 1=1
+        <if test="userName != null and userName != ''">
+            and t.userName = #{userName}
+        </if>
+        <if test="password != null and password != ''">
+            and t.password = #{password}
+        </if>
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT
+        t.*, r.roleName
+        FROM
+        srm_user t
+        INNER JOIN srm_user_role ur ON t.id = ur.userId
+        INNER JOIN srm_role r on r.id = ur.roleId
+        where 1 = 1
+        <if test="condition.userName != null and condition.userName != ''">
+            and t.userName like '%' || #{condition.userName} || '%'
+        </if>
+        <if test="condition.userMobile != null and condition.userMobile != ''">
+            and t.userMobile = #{condition.userMobile}
+        </if>
+    </select>
+
+    <select id="count" resultType="long">
+        SELECT
+        t.*, r.roleName
+        FROM
+        srm_user t
+        INNER JOIN srm_user_role ur ON t.id = ur.userId
+        INNER JOIN srm_role r on r.id = ur.roleId
+        where 1 = 1
+        <if test="condition.userName != null and condition.userName != ''">
+            and t.userName like '%' || #{condition.userName} || '%'
+        </if>
+        <if test="condition.userMobile != null and condition.userMobile != ''">
+            and t.userMobile = #{condition.userMobile}
+        </if>
+    </select>
+</mapper>

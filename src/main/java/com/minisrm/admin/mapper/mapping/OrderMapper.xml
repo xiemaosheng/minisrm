@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.minisrm.admin.mapper.OrderMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.minisrm.admin.model.Order">
+        <result column="id" property="id"/>
+        <result column="mktName" property="mktName"/>
+        <result column="goodImgUrl" property="goodImgUrl"/>
+        <result column="goodOrderNum" property="goodOrderNum"/>
+        <result column="sellerWXQQ" property="sellerWXQQ"/>
+        <result column="sellerOrderType" property="sellerOrderType"/>
+        <result column="workerName" property="workerName"/>
+        <result column="workingType" property="workingType"/>
+        <result column="cashBackType" property="cashBackType"/>
+        <result column="website" property="website"/>
+        <result column="ASIN" property="ASIN"/>
+        <result column="recPrice" property="recPrice"/>
+        <result column="xdPrice" property="xdPrice"/>
+        <result column="recCommission" property="recCommission"/>
+        <result column="xdJtUrl" property="xdJtUrl"/>
+        <result column="xdPayedJtUrl" property="xdPayedJtUrl"/>
+        <result column="xdUser" property="xdUser"/>
+        <result column="xdDateTime" property="xdDateTime"/>
+        <result column="recDateTime" property="recDateTime"/>
+        <result column="xdRequirement" property="xdRequirement"/>
+        <result column="signedJtUrl" property="signedJtUrl"/>
+        <result column="remark" property="remark"/>
+        <result column="status" property="status"/>
+        <result column="flag" property="flag"/>
+        <result column="createTime" property="createTime"/>
+        <result column="updateTime" property="updateTime"/>
+    </resultMap>
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="condition.id"  keyColumn="id">
+        insert into srm_order (mktName,
+        goodImgUrl,
+        goodOrderNum,
+        sellerWXQQ,
+        sellerOrderType,
+        workerName,
+        workingType,
+        cashBackType,
+        website,
+        ASIN,
+        recPrice,
+        xdPrice,
+        recCommission,
+        xdJtUrl,
+        xdPayedJtUrl,
+        xdUser,
+        xdDateTime,
+        recDateTime,
+        xdRequirement,
+        signedJtUrl,
+        remark,
+        status,
+        flag,
+        createTime,
+        updateTime)
+        values (#{condition.mktName},
+        #{condition.goodImgUrl},
+        #{condition.goodOrderNum},
+        #{condition.sellerWXQQ},
+        #{condition.sellerOrderType},
+        #{condition.workerName},
+        #{condition.workingType},
+        #{condition.cashBackType},
+        #{condition.website},
+        #{condition.ASIN},
+        #{condition.recPrice},
+        #{condition.xdPrice},
+        #{condition.recCommission},
+        #{condition.xdJtUrl},
+        #{condition.xdPayedJtUrl},
+        #{condition.xdUser},
+        #{condition.xdDateTime},
+        #{condition.recDateTime},
+        #{condition.xdRequirement},
+        #{condition.signedJtUrl},
+        #{condition.remark},
+        #{condition.status},
+        #{condition.flag},
+        #{condition.createTime},
+        #{condition.updateTime})
+    </insert>
+
+
+    <select id="selectList" resultMap="BaseResultMap">
+        select
+        t.*
+        from srm_order t
+        where 1=1
+        order by
+        <choose>
+            <when test="orderBy != null and orderBy != ''">
+                ${orderBy}
+            </when>
+            <otherwise>
+                updateTime desc
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        t.*
+        from srm_order t
+    </select>
+
+    <select id="findById" resultMap="BaseResultMap">
+        select
+        t.*
+        from srm_order t
+        where 1 = 1
+        <if test="id != null">
+            and t.id = #{id}
+        </if>
+    </select>
+</mapper>

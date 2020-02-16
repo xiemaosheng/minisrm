@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>欢迎页面-L-admin1.0</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>
+    <link rel="shortcut icon" th:href="@{/static/img/images/favicon.ico}" type="image/x-icon"/>
+    <link th:href="@{/static/css/font.css}" rel="stylesheet"/>
+    <link th:href="@{/static/css/xadmin.css}" rel="stylesheet"/>
+    <script type="text/javascript" th:src="@{/static/js/plugin/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/static/js/plugin/xadmin.js}"></script>
+    <script type="text/javascript" th:src="@{/static/lib/layui/layui.js}"></script>
+    <script type="text/javascript" th:src="@{/static/lib/layui/layui.all.js}"></script>
+    <script type="text/javascript" th:src="@{/static/js/module/order/order_add.js}"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+
+    <![endif]-->
+</head>
+
+<body>
+<div class="x-body">
+    <form action="" method="post" class="layui-form layui-form-pane" id="orderForm">
+        <div class="layui-form-item layui-form-text">
+            <table class="layui-table layui-input-block">
+                <tbody style="text-align:center;">
+                <tr>
+                    <td>
+                        站点
+                    </td>
+                    <td>
+                        <select name="website" id="website" lay-verify="required">
+                            <option value="0">日本</option>
+                            <option value="1" selected>美国</option>
+                            <option value="2">加拿大</option>
+                            <option value="3">澳大利亚</option>
+                            <option value="4">德国</option>
+                            <option value="5">英国</option>
+                            <option value="6">法国</option>
+                            <option value="7">西班牙</option>
+                            <option value="8">意大利</option>
+                        </select>
+                    </td>
+                    <td>
+                        店铺名
+                    </td>
+                    <td>
+                        <input type="text" name="mktName" id="mktName" required lay-verify="required" placeholder="请输入店铺名"
+                               autocomplete="off" class="layui-input">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        添加商品图片
+                    </td>
+                    <td>
+                        <button type="button" class="layui-btn" id="uploadPicture">
+                            <i class="layui-icon">&#xe67c;</i>上传图片
+                        </button>
+                    </td>
+                    <td>
+                        ASIN
+                    </td>
+                    <td>
+                        <input type="text" name="ASIN" id="ASIN" required lay-verify="required" placeholder=""
+                               autocomplete="off" class="layui-input">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        数量
+                    </td>
+                    <td>
+                        <input type="text" name="orderCount" required lay-verify="required" placeholder=""
+                               autocomplete="off" class="layui-input">
+                    </td>
+                    <td>
+                        天数
+                    </td>
+                    <td>
+                        <input type="text" name="dayCount" required lay-verify="required" placeholder=""
+                               autocomplete="off" class="layui-input">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        价格(USD)
+                    </td>
+                    <td>
+                        <input type="text" name="recPrice" id="recPrice" required lay-verify="required" placeholder="" autocomplete="off"
+                               class="layui-input">
+                    </td>
+                    <td>
+                        接单佣金(RMB)
+                    </td>
+                    <td>
+                        <input type="text" name="recCommission" id="recCommission" required lay-verify="required" placeholder=""
+                               autocomplete="off" class="layui-input">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        员工姓名
+                    </td>
+                    <td>
+                        <input type="text" name="workerName" id="workerName" required lay-verify="required" placeholder=""
+                               autocomplete="off" class="layui-input">
+                    </td>
+                    <td>
+                        卖家微信/QQ
+                    </td>
+                    <td>
+                        <input type="text" name="sellerWXQQ" id="sellerWXQQ" required lay-verify="required" placeholder=""
+                               autocomplete="off" class="layui-input">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        返款方式
+                    </td>
+                    <td>
+                        <select name="cashBackType" id="cashBackType" lay-verify="required">
+                            <option value="0" selected>先评后返(上评后返全款)</option>
+                            <option value="1">先本后佣(下单返本金,留评返佣金)</option>
+                            <option value="2">PP返款</option>
+                        </select>
+                    </td>
+                    <td>
+                        订单类型
+                    </td>
+                    <td>
+                        <input type="radio" name="sellerOrderType" value="中介单" title="中介单">
+                        <input type="radio" name="sellerOrderType" value="卖家单" title="卖家单">
+                        <input type="radio" name="sellerOrderType" value="养号单" title="养号单">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        工作性质
+                    </td>
+                    <td>
+                        <select name="workingType" id="workingType" lay-verify="required">
+                            <option value="0" selected>全职</option>
+                            <option value="1">兼职</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        接单日期
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" id="recDateTime" name="recDateTime">
+                    </td>
+                    <td>
+                        上评日期
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" id="reviewPlanDateTime" name="reviewPlanDateTime">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        下单要求
+                    </td>
+                    <td>
+                        <textarea name="xdRequirement" id="xdRequirement" placeholder="请输入内容" class="layui-textarea"></textarea>
+                    </td>
+                    <td>
+                        备注
+                    </td>
+                    <td>
+                        <textarea name="remark" id="remark" placeholder="请输入内容" class="layui-textarea"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        是否留评
+                    </td>
+                    <td>
+                        <select name="isComment" lay-verify="required">
+                            <option value="0" selected>否</option>
+                            <option value="1">是</option>
+                        </select>
+                    </td>
+                    <td>
+                        是否需要提供到货拍照
+                    </td>
+                    <td>
+                        <select name="isPhoto" lay-verify="required">
+                            <option value="0" selected>否</option>
+                            <option value="1">是</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        是否换仓
+                    </td>
+                    <td>
+                        <select name="isChange" lay-verify="required">
+                            <option value="0" selected>否</option>
+                            <option value="1">是</option>
+                        </select>
+                    </td>
+                    <td>
+                        是否回收
+                    </td>
+                    <td>
+                        <select name="isRecover" lay-verify="required">
+                            <option value="0" selected>否</option>
+                            <option value="1">是</option>
+                        </select>
+                        回收佣金
+                        <input type="text" name="recoverCommission" required lay-verify="required" placeholder=""
+                               autocomplete="off" class="layui-input">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        评论标题
+                    </td>
+                    <td>
+                        <input type="text" name="title" id="title" required lay-verify="required" placeholder=""
+                               autocomplete="off" class="layui-input">
+                    </td>
+                    <td>
+                        评论内容
+                    </td>
+                    <td>
+                        <textarea name="content" id="content" placeholder="请输入内容" class="layui-textarea"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        评论图片
+                    </td>
+                    <td>
+                        <button type="button" class="layui-btn" id="uploadCommentPicture">
+                            <i class="layui-icon">&#xe67c;</i>上传图片
+                        </button>
+                    </td>
+                    <td>
+                        评论视频
+                    </td>
+                    <td>
+                        <button type="button" class="layui-btn" id="uploadCommentVideo">
+                            <i class="layui-icon">&#xe67c;</i>上传视频
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="layui-form-item" style="float: right;">
+            <button class="layui-btn" lay-submit="" lay-filter="add">保存</button>
+        </div>
+    </form>
+</div>
+<script>
+        layui.use(['form','layer','upload','laydate'], function(){
+            $ = layui.jquery;
+            var form = layui.form
+            ,layer = layui.layer,upload = layui.upload,laydate = layui.laydate;
+            //自定义验证规则
+            form.verify({
+                nikename: function(value){
+                if(value.length < 5){
+                    return '昵称至少得5个字符啊';
+                }
+                }
+                ,pass: [/(.+){6,12}$/, '密码必须6到12位']
+                ,repass: function(value){
+                    if($('#L_pass').val()!=$('#L_repass').val()){
+                        return '两次密码不一致';
+                    }
+                }
+            });
+            //监听提交
+            form.on('submit(add)', function(data){
+                console.log(data);
+                //发异步，把数据提交给php
+                layer.alert("增加成功", {icon: 6},function () {
+                    // 获得frame索引
+                    var index = parent.layer.getFrameIndex(window.name);
+                    //关闭当前frame
+                    parent.layer.close(index);
+                });
+                return false;
+            });
+            //执行实例
+            var uploadPicture = upload.render({
+                elem: '#uploadPicture' //绑定元素
+                ,url: '/upload/picture' //上传接口
+                ,done: function(res){
+                //上传完毕回调
+                }
+                ,error: function(){
+                //请求异常回调
+                }
+            });
+            var uploadCommentPicture = upload.render({
+                elem: '#uploadCommentPicture' //绑定元素
+                ,url: '/upload/commentPicture' //上传接口
+                ,done: function(res){
+                //上传完毕回调
+                }
+                ,error: function(){
+                //请求异常回调
+                }
+            });
+            var uploadCommentVideo = upload.render({
+                elem: '#uploadCommentVideo' //绑定元素
+                ,url: '/upload/commentVideo' //上传接口
+                ,done: function(res){
+                //上传完毕回调
+                }
+                ,error: function(){
+                //请求异常回调
+                }
+            });
+            //日期选择器
+            laydate.render({ 
+                elem: '#takeOrderDate'
+            });
+            laydate.render({ 
+                elem: '#commentDate'
+            });
+        });
+
+</script>
+</body>
+</html>

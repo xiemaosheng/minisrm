@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.minisrm.admin.mapper.RoleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.minisrm.admin.model.Role">
+        <result column="id" property="id"/>
+        <result column="roleName" property="roleName"/>
+        <result column="roleCode" property="roleCode"/>
+        <result column="createTime" property="createTime"/>
+        <result column="updateTime" property="updateTime"/>
+    </resultMap>
+
+    <select id="selectList" resultMap="BaseResultMap">
+        select
+        t.*
+        from srm_role t
+        where 1=1
+        <if test="condition.roleName != null and condition.roleName != ''">
+            and t.roleName like '%' || #{condition.roleName} || '%'
+        </if>
+        order by
+        <choose>
+            <when test="orderBy != null and orderBy != ''">
+                ${orderBy}
+            </when>
+            <otherwise>
+                updateTime desc
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="getRoleById" resultMap="BaseResultMap">
+        select
+        r.*
+        from srm_role r inner join srm_user_role ur on r.id = ur.roleId
+        where 1=1
+        <if test="userId != null and userId != ''">
+            and ur.userId = #{userId}
+        </if>
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        t.*
+        from srm_role t
+        where 1=1
+    </select>
+</mapper>

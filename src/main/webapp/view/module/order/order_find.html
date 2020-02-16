@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>欢迎页面-L-admin1.0</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>
+    <link rel="shortcut icon" th:href="@{/static/img/images/favicon.ico}" type="image/x-icon"/>
+    <link th:href="@{/static/css/font.css}" rel="stylesheet"/>
+    <link th:href="@{/static/css/xadmin.css}" rel="stylesheet"/>
+    <script type="text/javascript" th:src="@{/static/js/plugin/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/static/js/plugin/xadmin.js}"></script>
+    <script type="text/javascript" th:src="@{/static/lib/layui/layui.js}"></script>
+    <script type="text/javascript" th:src="@{/static/lib/layui/layui.all.js}"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+
+    <![endif]-->
+</head>
+
+<body>
+<div class="x-body">
+    <form action="" method="post" class="layui-form layui-form-pane" id="orderForm">
+        <div class="layui-form-item layui-form-text">
+            <table class="layui-table layui-input-block">
+                <tbody style="text-align:center;">
+                <tr>
+                    <td>
+                        站点
+                    </td>
+                    <td>
+                        <input type="text" readonly="readonly" name="website" id="website" th:value="${order.website}">
+                    </td>
+                    <td>
+                        店铺名
+                    </td>
+                    <td>
+                        <input type="text" readonly="readonly" name="mktName" id="mktName" th:value="${order.mktName}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        添加商品图片
+                    </td>
+                    <td>
+                        <button type="button" class="layui-btn" id="uploadPicture">
+                            <i class="layui-icon">&#xe67c;</i>上传图片
+                        </button>
+                    </td>
+                    <td>
+                        ASIN
+                    </td>
+                    <td>
+                        <input type="text" readonly="readonly" name="ASIN" id="ASIN" th:value="${order.ASIN}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        数量
+                    </td>
+                    <td>
+                        <input type="text" readonly="readonly" name="orderCount" th:value="${order.orderCount}">
+                    </td>
+                    <td>
+                        天数
+                    </td>
+                    <td>
+                        <input type="text" readonly="readonly" name="dayCount" th:value="${order.dayCount}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        价格(USD)
+                    </td>
+                    <td>
+                        <input type="text" readonly="readonly" name="recPrice" id="recPrice" th:value="${order.recPrice}">
+                    </td>
+                    <td>
+                        接单佣金(RMB)
+                    </td>
+                    <td>
+                        <input type="text" readonly="readonly" name="recCommission" id="recCommission" th:value="${order.recCommission}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        员工姓名
+                    </td>
+                    <td>
+                        <input type="text" readonly="readonly" name="workerName" id="workerName" th:value="${order.workerName}">
+                    </td>
+                    <td>
+                        卖家微信/QQ
+                    </td>
+                    <td>
+                        <input type="text" readonly="readonly" name="sellerWXQQ" id="sellerWXQQ" th:value="${order.sellerWXQQ}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        返款方式
+                    </td>
+                    <td>
+                        <input type="text" readonly="readonly" name="cashBackType" id="cashBackType" th:value="${order.cashBackType}">
+                    </td>
+                    <td>
+                        订单类型
+                    </td>
+                    <td>
+                        <input type="text" readonly="readonly" id="sellerOrderType" name="sellerOrderType" th:value="${order.sellerOrderType}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        工作性质
+                    </td>
+                    <td>
+                        <input type="text" readonly="readonly" id="workingType" name="workingType" th:value="${order.workingType}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        接单日期
+                    </td>
+                    <td>
+                        <input type="text" readonly="readonly" id="recDateTime" name="recDateTime" th:value="${order.recDateTime}">
+                    </td>
+                    <td>
+                        上评日期
+                    </td>
+                    <td>
+                        <input type="text" readonly="readonly" id="reviewPlanDateTime" name="reviewPlanDateTime" th:value="${order.reviewPlanDateTime}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        下单要求
+                    </td>
+                    <td>
+                        <textarea name="xdRequirement" readonly="readonly" id="xdRequirement" th:value="${order.xdRequirement}"></textarea>
+                    </td>
+                    <td>
+                        备注
+                    </td>
+                    <td>
+                        <textarea name="remark" readonly="readonly" id="remark" th:value="${order.remark}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        是否留评
+                    </td>
+                    <td>
+                        <select name="isComment" lay-verify="required">
+                            <option value="0" selected>否</option>
+                            <option value="1">是</option>
+                        </select>
+                    </td>
+                    <td>
+                        是否需要提供到货拍照
+                    </td>
+                    <td>
+                        <select name="isPhoto" lay-verify="required">
+                            <option value="0" selected>否</option>
+                            <option value="1">是</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        是否换仓
+                    </td>
+                    <td>
+                        <select name="isChange" lay-verify="required">
+                            <option value="0" selected>否</option>
+                            <option value="1">是</option>
+                        </select>
+                    </td>
+                    <td>
+                        是否回收
+                    </td>
+                    <td>
+                        <select name="isRecover" lay-verify="required">
+                            <option value="0" selected>否</option>
+                            <option value="1">是</option>
+                        </select>
+                        回收佣金
+                        <input type="text" name="recoverCommission" required lay-verify="required" placeholder=""
+                               autocomplete="off" class="layui-input">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        评论标题
+                    </td>
+                    <td>
+                        <input type="text" name="title" id="title" required lay-verify="required" placeholder=""
+                               autocomplete="off" class="layui-input">
+                    </td>
+                    <td>
+                        评论内容
+                    </td>
+                    <td>
+                        <textarea name="content" id="content" placeholder="请输入内容" class="layui-textarea"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        评论图片
+                    </td>
+                    <td>
+                        <button type="button" class="layui-btn" id="uploadCommentPicture">
+                            <i class="layui-icon">&#xe67c;</i>上传图片
+                        </button>
+                    </td>
+                    <td>
+                        评论视频
+                    </td>
+                    <td>
+                        <button type="button" class="layui-btn" id="uploadCommentVideo">
+                            <i class="layui-icon">&#xe67c;</i>上传视频
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>
+</body>
+</html>

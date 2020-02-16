@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head th:include="common/head::common_head('首页')"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content">
+		<div class="row">
+			<div class="col-sm-12">
+				<div id="tab-favorite" class="ibox float-e-margins">
+					<div class="ibox-title">
+						<h5>页面收藏</h5>
+						<div class="ibox-tools">
+							<a class="tab-favorite-edit"><i class="fa fa-wrench"></i></a>
+						</div>
+					</div>
+					<div class="ibox-content">
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<div th:include="common/script::common_script"></div>
+	<script type="text/javascript" th:src="@{/static/js/welcome.js}"></script>
+</body>
+</html>

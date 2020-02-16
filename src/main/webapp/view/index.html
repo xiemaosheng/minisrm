@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>供应链后台管理系统</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+    <link rel="shortcut icon" th:href="@{/static/img/images/favicon.ico}" type="image/x-icon"/>
+    <link th:href="@{/static/css/font.css}" rel="stylesheet"/>
+    <link th:href="@{/static/css/xadmin.css}" rel="stylesheet"/>
+
+    <script type="text/javascript" th:src="@{/static/js/plugin/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/static/js/plugin/xadmin.js}"></script>
+    <script type="text/javascript" th:src="@{/static/lib/layui/layui.js}"></script>
+</head>
+<body>
+<!-- 顶部开始 -->
+<div class="container">
+    <!-- 顶部页面-->
+    <nav th:include="common/top" class="navbar-default navbar-static-side" role="navigation"></nav>
+
+    <!-- 左侧菜单页面-->
+    <nav th:include="common/left" class="navbar-default navbar-static-side" role="navigation"></nav>
+
+    <!-- 右侧内容页面-->
+    <nav th:include="common/content" class="navbar-default navbar-static-side" role="navigation"></nav>
+</div>
+</body>
+</html>
