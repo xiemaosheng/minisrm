@@ -1,5 +1,5 @@
 /**
- * 用户管理
+ * 未分配
  */
 var pageCurr;
 var form;
@@ -12,13 +12,16 @@ $(function() {
             elem: '#orderTable',
             url:'/rec/order/all/selectByPage',
             method: 'post', //默认：get请求
-            cellwidth: 100,
+            cellMinWidth: 80,
             limit:10,
             limits:[10,20,30,40,50],
             page: true,
             request: {
                 pageName: 'offset', //页码的参数名称，默认：pageNum
                 limitName: 'limit' //每页数据量的参数名，默认：pageSize
+            },
+            where : {
+                status : 4
             },
             response:{
                 statusName: 'code', //数据状态的字段名称，默认：code
@@ -50,6 +53,7 @@ $(function() {
                 ,{field:'price', title: '金额',align:'left',width:150,templet: function(d){
                                                                      return '<div>' +
                                                                      '接单金额：<span style="color: #c00;">'+ d.recPrice +'</span></br>' +
+                                                                     '佣金金额：<span style="color: #c00;">'+ d.recCommission +'</span></br>' +
                                                                      '下单金额：<span style="color: #c00;">'+ d.xdPrice +'</span></br>' +
                                                                      '</div>'
                                                                         }}
@@ -61,14 +65,8 @@ $(function() {
                                                                          }}
                 ,{field:'xdRequirement', title: '下单要求',align:'center'}
                 ,{field:'remark', title: '备注',align:'center'}
+                ,{field:'xdRequirement', title: '截图',align:'center'}
                 ,{field:'statusText', title: '状态',align:'center',width:80}
-                ,{field:'flag', title: '额外要求',align:'left',width:100,templet: function(d){
-                                                                       return '<div>' +
-                                                                       '留评：<span style="color: #c00;">'+ d.isLP +'</span></br>' +
-                                                                       '换仓：<span style="color: #c00;">'+ d.isHC +'</span></br>' +
-                                                                       '回收：<span style="color: #c00;">'+ d.isHS +'</span></br>' +
-                                                                       '</div>'
-                                                                       }}
                 ,{title:'操作',align:'center', toolbar:'#optBar'}
             ]],
             done: function(res, curr, count){
@@ -76,6 +74,7 @@ $(function() {
                 //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
                 //console.log(res);
                 //得到当前页码
+                console.log(curr);
                 $("[data-field='userStatus']").children().each(function(){
                     if($(this).text()=='1'){
                         $(this).text("启用")
@@ -98,9 +97,9 @@ $(function() {
             } else if(obj.event === 'edit'){
                 //编辑
                 edit(data,"编辑订单");
-            }else if(obj.event === 'cancel'){
-                //取消
-                cancel(data,data.id);
+            }else if(obj.event === 'opt'){
+                //恢复
+                opt(data,data.id);
             }
         });
 
@@ -143,31 +142,6 @@ $(function() {
     });
 });
 
-//提交表单
-function formSubmit(obj){
-    $.ajax({
-        type: "POST",
-        data: $("#userForm").serialize(),
-        url: "/user/setUser",
-        success: function (data) {
-            if (data.code == 1) {
-                layer.alert(data.msg,function(){
-                    layer.closeAll();
-                    load(obj);
-                });
-            } else {
-                layer.alert(data.msg);
-            }
-        },
-        error: function () {
-            layer.alert("操作请求错误，请您稍后再试",function(){
-                layer.closeAll();
-                //加载load方法
-                load(obj);//自定义
-            });
-        }
-    });
-}
 
 // 编辑--打开编辑页面
 function edit(data,title){
@@ -185,7 +159,7 @@ function edit(data,title){
         fixed: false,
         resize: false,
         shadeClose: true,
-         area: ['1600px','1050px'],
+         area: ['1200px','900px'],
         content:  '/rec/order/edit/' + data.id,
         end: function(){
             cleanUser();
@@ -200,7 +174,7 @@ function find(id,title) {
             fixed: false,
             resize: false,
             shadeClose: true,
-            area: ['1600px','1050px'],
+            area: ['1200px','900px'],
             content: "/rec/order/find/" + id,
             end: function(){
                 cleanUser();
@@ -208,31 +182,12 @@ function find(id,title) {
         });
 }
 
-function downUser(obj,id,name) {
-    layer.confirm('您确定要停用'+name+'用户吗？', {
-                    btn: ['确认','返回'] //按钮
-                }, function(){
-                    $.post("/admin/list/user/updateUserStatus",{"id":id,"userStatus":0},function(data){
-                        if (data.code == 200) {
-                            layer.alert(data.message,function(){
-                                layer.closeAll();
-                                load(obj);
-                            });
-                        } else {
-                            layer.alert(data.data);
-                        }
-                    });
-                }, function(){
-                    layer.closeAll();
-                });
-}
-//取消
-function cancel(obj,id) {
+function opt(obj,id) {
     if(null!=id){
-        layer.confirm('您确定要恢取消？', {
+        layer.confirm('您确定要反馈吗？', {
             btn: ['确认','返回'] //按钮
         }, function(){
-            $.post("/rec/order/updateStatus/" + id + "/" +1,function(data){
+            $.post("/rec/order/updateStatus",{"id":id,"status":5},function(data){
                 if (data.code == 200) {
                     layer.alert(data.message,function(){
                         layer.closeAll();

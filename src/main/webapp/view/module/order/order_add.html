@@ -35,15 +35,15 @@
                     </td>
                     <td>
                         <select name="website" id="website" lay-verify="required">
-                            <option value="0">日本</option>
-                            <option value="1" selected>美国</option>
-                            <option value="2">加拿大</option>
-                            <option value="3">澳大利亚</option>
-                            <option value="4">德国</option>
-                            <option value="5">英国</option>
-                            <option value="6">法国</option>
-                            <option value="7">西班牙</option>
-                            <option value="8">意大利</option>
+                            <option value="日本">日本</option>
+                            <option value="美国" selected>美国</option>
+                            <option value="加拿大">加拿大</option>
+                            <option value="澳大利亚">澳大利亚</option>
+                            <option value="德国">德国</option>
+                            <option value="德国">德国</option>
+                            <option value="法国">法国</option>
+                            <option value="西班牙">西班牙</option>
+                            <option value="意大利">意大利</option>
                         </select>
                     </td>
                     <td>
@@ -57,8 +57,13 @@
                 <tr>
                     <td>
                         添加商品图片
+                        <button type="button">
+                            <i class="layui-icon">&#xe67c;</i>点击黏贴
+                        </button>
                     </td>
                     <td>
+                        <input type="hidden" name="goodImgUrl" id="goodImgUrl"/>
+                        <img src="" id="preImg"/>
                         <button type="button" class="layui-btn" id="uploadPicture">
                             <i class="layui-icon">&#xe67c;</i>上传图片
                         </button>
@@ -145,8 +150,7 @@
                     </td>
                     <td>
                         <select name="workingType" id="workingType" lay-verify="required">
-                            <option value="0" selected>全职</option>
-                            <option value="1">兼职</option>
+                            <option th:value="${workerType}" th:text="${workerType}" selected/>
                         </select>
                     </td>
                 </tr>
@@ -183,18 +187,18 @@
                         是否留评
                     </td>
                     <td>
-                        <select name="isComment" lay-verify="required">
-                            <option value="0" selected>否</option>
-                            <option value="1">是</option>
+                        <select name="isLP" lay-verify="required">
+                            <option value="否" selected>否</option>
+                            <option value="是">是</option>
                         </select>
                     </td>
                     <td>
                         是否需要提供到货拍照
                     </td>
                     <td>
-                        <select name="isPhoto" lay-verify="required">
-                            <option value="0" selected>否</option>
-                            <option value="1">是</option>
+                        <select name="isDHPZ" lay-verify="required">
+                            <option value="否" selected>否</option>
+                            <option value="是">是</option>
                         </select>
                     </td>
                 </tr>
@@ -203,21 +207,21 @@
                         是否换仓
                     </td>
                     <td>
-                        <select name="isChange" lay-verify="required">
-                            <option value="0" selected>否</option>
-                            <option value="1">是</option>
+                        <select name="isHC" lay-verify="required">
+                            <option value="否" selected>否</option>
+                            <option value="是">是</option>
                         </select>
                     </td>
                     <td>
                         是否回收
                     </td>
                     <td>
-                        <select name="isRecover" lay-verify="required">
-                            <option value="0" selected>否</option>
-                            <option value="1">是</option>
+                        <select name="isHS" lay-verify="required">
+                            <option value="否" selected>否</option>
+                            <option value="是">是</option>
                         </select>
                         回收佣金
-                        <input type="text" name="recoverCommission" required lay-verify="required" placeholder=""
+                        <input type="text" name="recoverCommission" placeholder=""
                                autocomplete="off" class="layui-input">
                     </td>
                 </tr>
@@ -226,7 +230,7 @@
                         评论标题
                     </td>
                     <td>
-                        <input type="text" name="title" id="title" required lay-verify="required" placeholder=""
+                        <input type="text" name="title" id="title" placeholder=""
                                autocomplete="off" class="layui-input">
                     </td>
                     <td>
@@ -241,6 +245,8 @@
                         评论图片
                     </td>
                     <td>
+                        <input type="hidden" name="reviewImgUrl" id="reviewImgUrl"/>
+                        <img src="" id="preReviewImg"/>
                         <button type="button" class="layui-btn" id="uploadCommentPicture">
                             <i class="layui-icon">&#xe67c;</i>上传图片
                         </button>
@@ -249,6 +255,10 @@
                         评论视频
                     </td>
                     <td>
+                        <input type="hidden" name="reviewVideoUrl" id="reviewVideoUrl"/>
+                        <video width="120" height="60" controls="controls">
+                            <source src="" type="video/mp4" id="preReviewVideo"/>
+                        </video>
                         <button type="button" class="layui-btn" id="uploadCommentVideo">
                             <i class="layui-icon">&#xe67c;</i>上传视频
                         </button>
@@ -263,6 +273,7 @@
     </form>
 </div>
 <script>
+
         layui.use(['form','layer','upload','laydate'], function(){
             $ = layui.jquery;
             var form = layui.form
@@ -296,9 +307,11 @@
             //执行实例
             var uploadPicture = upload.render({
                 elem: '#uploadPicture' //绑定元素
-                ,url: '/upload/picture' //上传接口
-                ,done: function(res){
-                //上传完毕回调
+                ,url: '/file/upload' //上传接口
+                ,done: function(res,index,upload){
+                    //上传完毕回调
+                    $("#goodImgUrl").val(res.fileName);
+                    document.getElementById("preImg").src= res.fileName;
                 }
                 ,error: function(){
                 //请求异常回调
@@ -306,9 +319,11 @@
             });
             var uploadCommentPicture = upload.render({
                 elem: '#uploadCommentPicture' //绑定元素
-                ,url: '/upload/commentPicture' //上传接口
+                ,url: '/file/upload/commentPicture' //上传接口
                 ,done: function(res){
                 //上传完毕回调
+                 $("#reviewImgUrl").val(res.fileName);
+                 document.getElementById("preReviewImg").src= res.fileName;
                 }
                 ,error: function(){
                 //请求异常回调
@@ -316,9 +331,11 @@
             });
             var uploadCommentVideo = upload.render({
                 elem: '#uploadCommentVideo' //绑定元素
-                ,url: '/upload/commentVideo' //上传接口
+                ,url: '/file/upload/commentVideo' //上传接口
                 ,done: function(res){
                 //上传完毕回调
+                 $("#reviewVideoUrl").val(res.fileName);
+                 document.getElementById("preReviewVideo").src= res.fileName;
                 }
                 ,error: function(){
                 //请求异常回调
@@ -326,12 +343,43 @@
             });
             //日期选择器
             laydate.render({ 
-                elem: '#takeOrderDate'
+                elem: '#recDateTime'
             });
             laydate.render({ 
-                elem: '#commentDate'
+                elem: '#reviewPlanDateTime'
             });
         });
+
+       document.addEventListener('paste', function (event) {
+            var items = (event.clipboardData && event.clipboardData.items) || [];
+            var file = null;
+
+            if (items && items.length) {
+                for (var i = 0; i < items.length; i++) {
+                    if (items[i].type.indexOf('image') !== -1) {
+                        file = items[i].getAsFile();
+                        break;
+                    }
+                }
+            }
+
+            var fd = new FormData(document.forms[0]);
+            fd.append("file", file, 'image.png');
+            //创建XMLHttpRequest对象
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST','/file/upload',true);
+            // 上传成功后，在回调函数中设置前端预览
+            xhr.onload = function() {
+                document.getElementById("preImg").src= URL.createObjectURL(file);
+                var data = JSON.parse( xhr.responseText );
+                $("#goodImgUrl").val(data.fileName);
+             };
+            xhr.send(fd);
+
+            if (file.size === 0) {
+               return;
+             }
+       });
 
 </script>
 </body>

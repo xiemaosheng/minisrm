@@ -23,5 +23,9 @@ public interface OrderService {
 
     void edit(Order order);
 
+    void updateStatus(long id , long status);
+
+    void updateByCondition(Order condition);
+
     Order findBy(Long id);
 }

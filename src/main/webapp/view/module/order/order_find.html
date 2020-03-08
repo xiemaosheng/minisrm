@@ -44,12 +44,10 @@
                 </tr>
                 <tr>
                     <td>
-                        添加商品图片
+                        商品图片
                     </td>
                     <td>
-                        <button type="button" class="layui-btn" id="uploadPicture">
-                            <i class="layui-icon">&#xe67c;</i>上传图片
-                        </button>
+                        <img th:src="${order.goodImgUrl}"/>
                     </td>
                     <td>
                         ASIN
@@ -77,13 +75,15 @@
                         价格(USD)
                     </td>
                     <td>
-                        <input type="text" readonly="readonly" name="recPrice" id="recPrice" th:value="${order.recPrice}">
+                        <input type="text" readonly="readonly" name="recPrice" id="recPrice"
+                               th:value="${order.recPrice}">
                     </td>
                     <td>
                         接单佣金(RMB)
                     </td>
                     <td>
-                        <input type="text" readonly="readonly" name="recCommission" id="recCommission" th:value="${order.recCommission}">
+                        <input type="text" readonly="readonly" name="recCommission" id="recCommission"
+                               th:value="${order.recCommission}">
                     </td>
                 </tr>
                 <tr>
@@ -91,13 +91,15 @@
                         员工姓名
                     </td>
                     <td>
-                        <input type="text" readonly="readonly" name="workerName" id="workerName" th:value="${order.workerName}">
+                        <input type="text" readonly="readonly" name="workerName" id="workerName"
+                               th:value="${order.workerName}">
                     </td>
                     <td>
                         卖家微信/QQ
                     </td>
                     <td>
-                        <input type="text" readonly="readonly" name="sellerWXQQ" id="sellerWXQQ" th:value="${order.sellerWXQQ}">
+                        <input type="text" readonly="readonly" name="sellerWXQQ" id="sellerWXQQ"
+                               th:value="${order.sellerWXQQ}">
                     </td>
                 </tr>
                 <tr>
@@ -105,13 +107,15 @@
                         返款方式
                     </td>
                     <td>
-                        <input type="text" readonly="readonly" name="cashBackType" id="cashBackType" th:value="${order.cashBackType}">
+                        <input type="text" readonly="readonly" name="cashBackType" id="cashBackType"
+                               th:value="${order.cashBackTypeText}">
                     </td>
                     <td>
                         订单类型
                     </td>
                     <td>
-                        <input type="text" readonly="readonly" id="sellerOrderType" name="sellerOrderType" th:value="${order.sellerOrderType}">
+                        <input type="text" readonly="readonly" id="sellerOrderType" name="sellerOrderType"
+                               th:value="${order.sellerOrderType}">
                     </td>
                 </tr>
                 <tr>
@@ -119,7 +123,8 @@
                         工作性质
                     </td>
                     <td>
-                        <input type="text" readonly="readonly" id="workingType" name="workingType" th:value="${order.workingType}">
+                        <input type="text" readonly="readonly" id="workingType" name="workingType"
+                               th:value="${order.workingType}">
                     </td>
                 </tr>
                 <tr>
@@ -127,13 +132,15 @@
                         接单日期
                     </td>
                     <td>
-                        <input type="text" readonly="readonly" id="recDateTime" name="recDateTime" th:value="${order.recDateTime}">
+                        <input type="text" readonly="readonly" id="recDateTime" name="recDateTime"
+                               th:value="${order.recDateTime}">
                     </td>
                     <td>
                         上评日期
                     </td>
                     <td>
-                        <input type="text" readonly="readonly" id="reviewPlanDateTime" name="reviewPlanDateTime" th:value="${order.reviewPlanDateTime}">
+                        <input type="text" readonly="readonly" id="reviewPlanDateTime" name="reviewPlanDateTime"
+                               th:value="${order.reviewPlanDateTime}">
                     </td>
                 </tr>
                 <tr>
@@ -141,13 +148,14 @@
                         下单要求
                     </td>
                     <td>
-                        <textarea name="xdRequirement" readonly="readonly" id="xdRequirement" th:value="${order.xdRequirement}"></textarea>
+                        <textarea name="xdRequirement" readonly="readonly" id="xdRequirement"
+                                  th:text="${order.xdRequirement}"></textarea>
                     </td>
                     <td>
                         备注
                     </td>
                     <td>
-                        <textarea name="remark" readonly="readonly" id="remark" th:value="${order.remark}"></textarea>
+                        <textarea name="remark" readonly="readonly" id="remark" th:text="${order.remark}"></textarea>
                     </td>
                 </tr>
                 <tr>
@@ -155,18 +163,16 @@
                         是否留评
                     </td>
                     <td>
-                        <select name="isComment" lay-verify="required">
-                            <option value="0" selected>否</option>
-                            <option value="1">是</option>
+                        <select name="isLP" lay-verify="required">
+                            <option th:value="${order.isLP}" th:text="${order.isLP}" selected/>
                         </select>
                     </td>
                     <td>
                         是否需要提供到货拍照
                     </td>
                     <td>
-                        <select name="isPhoto" lay-verify="required">
-                            <option value="0" selected>否</option>
-                            <option value="1">是</option>
+                        <select name="isDHPZ" lay-verify="required">
+                            <option th:value="${order.isDHPZ}" th:text="${order.isDHPZ}" selected/>
                         </select>
                     </td>
                 </tr>
@@ -175,22 +181,20 @@
                         是否换仓
                     </td>
                     <td>
-                        <select name="isChange" lay-verify="required">
-                            <option value="0" selected>否</option>
-                            <option value="1">是</option>
+                        <select name="isHC" lay-verify="required">
+                            <option th:value="${order.isHC}" th:text="${order.isHC}" selected/>
                         </select>
                     </td>
                     <td>
                         是否回收
                     </td>
                     <td>
-                        <select name="isRecover" lay-verify="required">
-                            <option value="0" selected>否</option>
-                            <option value="1">是</option>
+                        <select name="isHS" lay-verify="required">
+                            <option th:value="${order.isHS}" th:text="${order.isHS}" selected/>
                         </select>
                         回收佣金
-                        <input type="text" name="recoverCommission" required lay-verify="required" placeholder=""
-                               autocomplete="off" class="layui-input">
+                        <input type="text" name="recoverCommission" placeholder=""
+                               autocomplete="off" class="layui-input" th:value="${order.recoverCommission}">
                     </td>
                 </tr>
                 <tr>
@@ -198,14 +202,15 @@
                         评论标题
                     </td>
                     <td>
-                        <input type="text" name="title" id="title" required lay-verify="required" placeholder=""
-                               autocomplete="off" class="layui-input">
+                        <input type="text" readonly="readonly" name="title" id="title" class="layui-input"
+                               th:value="${order.title}">
                     </td>
                     <td>
                         评论内容
                     </td>
                     <td>
-                        <textarea name="content" id="content" placeholder="请输入内容" class="layui-textarea"></textarea>
+                        <textarea readonly="readonly" name="content" id="content" th:value="${order.content}"
+                                  class="layui-textarea"></textarea>
                     </td>
                 </tr>
                 <tr>

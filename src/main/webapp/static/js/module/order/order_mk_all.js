@@ -185,7 +185,7 @@ function edit(data,title){
         fixed: false,
         resize: false,
         shadeClose: true,
-         area: ['1600px','1050px'],
+         area: ['1200px','900px'],
         content:  '/rec/order/edit/' + data.id,
         end: function(){
             cleanUser();
@@ -200,7 +200,7 @@ function find(id,title) {
             fixed: false,
             resize: false,
             shadeClose: true,
-            area: ['1600px','1050px'],
+            area: ['1200px','900px'],
             content: "/rec/order/find/" + id,
             end: function(){
                 cleanUser();
@@ -226,13 +226,13 @@ function downUser(obj,id,name) {
                     layer.closeAll();
                 });
 }
-//取消
-function cancel(obj,id) {
+//恢复
+function recoverUser(obj,id) {
     if(null!=id){
-        layer.confirm('您确定要恢取消？', {
+        layer.confirm('您确定要恢复吗？', {
             btn: ['确认','返回'] //按钮
         }, function(){
-            $.post("/rec/order/updateStatus/" + id + "/" +1,function(data){
+            $.post("/admin/list/user/updateUserStatus",{"id":id,"userStatus":1},function(data){
                 if (data.code == 200) {
                     layer.alert(data.message,function(){
                         layer.closeAll();

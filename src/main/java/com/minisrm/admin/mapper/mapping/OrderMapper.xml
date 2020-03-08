@@ -28,11 +28,17 @@
         <result column="remark" property="remark"/>
         <result column="status" property="status"/>
         <result column="flag" property="flag"/>
+        <result column="orderCount" property="orderCount"/>
+        <result column="dayCount" property="dayCount"/>
+        <result column="isLP" property="isLP"/>
+        <result column="isDHPZ" property="isDHPZ"/>
+        <result column="isHC" property="isHC"/>
+        <result column="isHS" property="isHS"/>
         <result column="createTime" property="createTime"/>
         <result column="updateTime" property="updateTime"/>
     </resultMap>
 
-    <insert id="save" useGeneratedKeys="true" keyProperty="condition.id"  keyColumn="id">
+    <insert id="save" useGeneratedKeys="true" keyProperty="condition.id" keyColumn="id">
         insert into srm_order (mktName,
         goodImgUrl,
         goodOrderNum,
@@ -56,6 +62,12 @@
         remark,
         status,
         flag,
+        orderCount,
+        dayCount,
+        isLP,
+        isDHPZ,
+        isHC,
+        isHS,
         createTime,
         updateTime)
         values (#{condition.mktName},
@@ -81,6 +93,12 @@
         #{condition.remark},
         #{condition.status},
         #{condition.flag},
+        #{condition.orderCount},
+        #{condition.dayCount},
+        #{condition.isLP},
+        #{condition.isDHPZ},
+        #{condition.isHC},
+        #{condition.isHS},
         #{condition.createTime},
         #{condition.updateTime})
     </insert>
@@ -91,6 +109,9 @@
         t.*
         from srm_order t
         where 1=1
+        <if test="condition.status != null">
+            and t.status = #{condition.status}
+        </if>
         order by
         <choose>
             <when test="orderBy != null and orderBy != ''">
@@ -117,4 +138,50 @@
             and t.id = #{id}
         </if>
     </select>
+
+    <update id="updateStatus">
+        update srm_order set status = #{status}
+        where id = #{id}
+    </update>
+
+    <update id="updateByCondition">
+        update srm_order
+        <trim prefix="set" suffixOverrides=",">
+            <if test="condition.mktName != null">mktName=#{condition.mktName},</if>
+            <if test="condition.goodImgUrl != null">goodImgUrl=#{condition.goodImgUrl},</if>
+            <if test="condition.goodOrderNum != null">goodOrderNum=#{condition.goodOrderNum},</if>
+            <if test="condition.sellerWXQQ != null">sellerWXQQ=#{condition.sellerWXQQ},</if>
+            <if test="condition.sellerOrderType != null">sellerOrderType=#{condition.sellerOrderType},</if>
+            <if test="condition.workerName != null">workerName=#{condition.workerName},</if>
+            <if test="condition.workingType != null">workingType=#{condition.workingType},</if>
+            <if test="condition.cashBackType != null">cashBackType=#{condition.cashBackType},</if>
+            <if test="condition.website != null">website=#{condition.website},</if>
+            <if test="condition.ASIN != null">ASIN=#{condition.ASIN},</if>
+            <if test="condition.recPrice != null">recPrice=#{condition.recPrice},</if>
+            <if test="condition.xdPrice != null">xdPrice=#{condition.xdPrice},</if>
+            <if test="condition.recCommission != null">recCommission=#{condition.recCommission},</if>
+            <if test="condition.xdJtUrl != null">xdJtUrl=#{condition.xdJtUrl},</if>
+
+            <if test="condition.xdPayedJtUrl != null">xdPayedJtUrl=#{condition.xdPayedJtUrl},</if>
+            <if test="condition.xdUser != null">xdUser=#{condition.xdUser},</if>
+            <if test="condition.xdDateTime != null">xdDateTime=#{condition.xdDateTime},</if>
+            <if test="condition.recDateTime != null">recDateTime=#{condition.recDateTime},</if>
+
+            <if test="condition.xdRequirement != null">xdRequirement=#{condition.xdRequirement},</if>
+            <if test="condition.signedJtUrl != null">signedJtUrl=#{condition.signedJtUrl},</if>
+
+            <if test="condition.remark != null">remark=#{condition.remark},</if>
+            <if test="condition.orderCount != null">orderCount=#{condition.orderCount},</if>
+
+            <if test="condition.dayCount != null">dayCount=#{condition.dayCount},</if>
+            <if test="condition.isLP != null">isLP=#{condition.isLP},</if>
+
+            <if test="condition.isDHPZ != null">isDHPZ=#{condition.isDHPZ},</if>
+
+            <if test="condition.isHC != null">isHC=#{condition.isHC},</if>
+
+            <if test="condition.isHS != null">isHS=#{condition.isHS},</if>
+        </trim>
+        where id = #{condition.id}#
+    </update>
 </mapper>

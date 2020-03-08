@@ -1,5 +1,5 @@
 /**
- * 用户管理
+ * 未分配
  */
 var pageCurr;
 var form;
@@ -12,13 +12,16 @@ $(function() {
             elem: '#orderTable',
             url:'/rec/order/all/selectByPage',
             method: 'post', //默认：get请求
-            cellwidth: 100,
+            cellMinWidth: 80,
             limit:10,
             limits:[10,20,30,40,50],
             page: true,
             request: {
                 pageName: 'offset', //页码的参数名称，默认：pageNum
                 limitName: 'limit' //每页数据量的参数名，默认：pageSize
+            },
+            where : {
+                status : 6
             },
             response:{
                 statusName: 'code', //数据状态的字段名称，默认：code
@@ -29,46 +32,25 @@ $(function() {
             cols: [[
                 {type: 'checkbox'}
                 ,{field:'id', title:'编号',align:'center',width:60}
-                ,{field:'recDateTime', title:'接单日期',align:'center',width:120}
-                ,{field:'goodImgUrl', title:'图片',width:120,templet:function (d) {
+                ,{field:'recDateTime', title:'收款时间',align:'center',width:120}
+                ,{field:'goodImgUrl', title:'收款图片',width:120,templet:function (d) {
                                                                    return '<div class="layer-photos-demo" onclick="img_click()" style="cursor:pointer;">' +
                                                                    '<img layer-pid="goodImgUrl"  layer-src="'+ d.goodImgUrl +
                                                                    '" src="' + d.goodImgUrl + '" alt="图片">' +
                                                                    '</div>'
                                                                                     }}
                 ,{field:'website', title:'站点',align:'center',width:100}
-                ,{field:'orderInfo', title:'订单信息',align:'left',templet: function(d){
-                                                                     return '<div>' +
-                                                                     'ASIN：<span style="color: #c00;">'+ d.aSIN +'</span></br>' +
-                                                                     '店铺：<span style="color: #c00;">'+ d.mktName +'</span></br>' +
-                                                                     '卖家：<span style="color: #c00;">'+ d.sellerWXQQ +'</span></br>' +
-                                                                     '类型：<span style="color: #c00;">'+ d.sellerOrderType +'</span></br>' +
-                                                                     '订单号：<span style="color: #c00;">'+ (d.goodOrderNum == 'undefined' ? '无':d.goodOrderNum) +'</span></br>'
-                                                                     + '</div>'
-                                                                   }
-                                                                 }
-                ,{field:'price', title: '金额',align:'left',width:150,templet: function(d){
-                                                                     return '<div>' +
-                                                                     '接单金额：<span style="color: #c00;">'+ d.recPrice +'</span></br>' +
-                                                                     '下单金额：<span style="color: #c00;">'+ d.xdPrice +'</span></br>' +
-                                                                     '</div>'
-                                                                        }}
-                 ,{field:'workerName', title: '员工信息',align:'left',width:150,templet: function(d){
-                                                                      return '<div>' +
-                                                                      '员工代码：<span style="color: #c00;">'+ d.workerName +'</span></br>' +
-                                                                      '购买ID：<span style="color: #c00;">'+ d.workerName +'</span></br>' +
-                                                                      '</div>'
-                                                                         }}
-                ,{field:'xdRequirement', title: '下单要求',align:'center'}
-                ,{field:'remark', title: '备注',align:'center'}
+                ,{field:'ASIN', title:'ASIN',align:'center',width:100}
+                ,{field:'ASIN', title:'店铺名',align:'center',width:100}
+                ,{field:'ASIN', title:'卖家微信/QQ',align:'center',width:100}
+                ,{field:'ASIN', title:'卖家微信/QQ',align:'center',width:100}
+                ,{field:'ASIN', title:'订单号',align:'center',width:100}
+                ,{field:'xdRequirement', title: '下单金额',align:'center'}
+                ,{field:'xdRequirement', title: '产品本金',align:'center'}
+                ,{field:'xdRequirement', title: '产品本金',align:'center'}
+                ,{field:'xdRequirement', title: '收款佣金',align:'center'}
+                ,{field:'xdRequirement', title: '收款人',align:'center'}
                 ,{field:'statusText', title: '状态',align:'center',width:80}
-                ,{field:'flag', title: '额外要求',align:'left',width:100,templet: function(d){
-                                                                       return '<div>' +
-                                                                       '留评：<span style="color: #c00;">'+ d.isLP +'</span></br>' +
-                                                                       '换仓：<span style="color: #c00;">'+ d.isHC +'</span></br>' +
-                                                                       '回收：<span style="color: #c00;">'+ d.isHS +'</span></br>' +
-                                                                       '</div>'
-                                                                       }}
                 ,{title:'操作',align:'center', toolbar:'#optBar'}
             ]],
             done: function(res, curr, count){
@@ -76,6 +58,7 @@ $(function() {
                 //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
                 //console.log(res);
                 //得到当前页码
+                console.log(curr);
                 $("[data-field='userStatus']").children().each(function(){
                     if($(this).text()=='1'){
                         $(this).text("启用")
@@ -98,9 +81,9 @@ $(function() {
             } else if(obj.event === 'edit'){
                 //编辑
                 edit(data,"编辑订单");
-            }else if(obj.event === 'cancel'){
-                //取消
-                cancel(data,data.id);
+            }else if(obj.event === 'recover'){
+                //恢复
+                recoverUser(data,data.id);
             }
         });
 
@@ -185,7 +168,7 @@ function edit(data,title){
         fixed: false,
         resize: false,
         shadeClose: true,
-         area: ['1600px','1050px'],
+         area: ['1200px','900px'],
         content:  '/rec/order/edit/' + data.id,
         end: function(){
             cleanUser();
@@ -200,7 +183,7 @@ function find(id,title) {
             fixed: false,
             resize: false,
             shadeClose: true,
-            area: ['1600px','1050px'],
+            area: ['1200px','900px'],
             content: "/rec/order/find/" + id,
             end: function(){
                 cleanUser();
@@ -226,13 +209,13 @@ function downUser(obj,id,name) {
                     layer.closeAll();
                 });
 }
-//取消
-function cancel(obj,id) {
+//恢复
+function recoverUser(obj,id) {
     if(null!=id){
-        layer.confirm('您确定要恢取消？', {
+        layer.confirm('您确定要恢复吗？', {
             btn: ['确认','返回'] //按钮
         }, function(){
-            $.post("/rec/order/updateStatus/" + id + "/" +1,function(data){
+            $.post("/admin/list/user/updateUserStatus",{"id":id,"userStatus":1},function(data){
                 if (data.code == 200) {
                     layer.alert(data.message,function(){
                         layer.closeAll();

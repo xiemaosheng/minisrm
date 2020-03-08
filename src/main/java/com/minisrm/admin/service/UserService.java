@@ -13,13 +13,13 @@ public interface UserService {
 
     void save(User user);
 
-    List<User> selectList(User user, String orderBy);
+    List<User> selectList(User user, int offset, int limit, String orderBy);
 
     User getLoginUser(String userName, String password);
 
     List<User> selectAll();
 
-    Long count(User condition);
+    Long countTotal(User condition);
 
     void updateStatus(Long userId, Integer status);
 

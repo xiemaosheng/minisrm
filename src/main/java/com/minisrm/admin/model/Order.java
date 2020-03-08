@@ -68,6 +68,9 @@ public class Order implements Serializable {
     @Column(name = "cashBackType")
     private String cashBackType;
 
+    @Transient
+    private String cashBackTypeText;
+
     /**
      * 站点
      */
@@ -99,6 +102,12 @@ public class Order implements Serializable {
     private double recCommission;
 
     /**
+     * 回收佣金
+     */
+    @Transient
+    private String recoverCommission;
+
+    /**
      * 下单截图url
      */
     @Column(name = "xdJtUrl")
@@ -116,13 +125,11 @@ public class Order implements Serializable {
     @Column(name = "xdUser")
     private String xdUser;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
     @Column(name = "xdDateTime")
-    private Date xdDateTime;
+    private String xdDateTime;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
     @Column(name = "recDateTime")
-    private Date recDateTime;
+    private String recDateTime;
 
     @Column(name = "xdRequirement")
     private String xdRequirement;
@@ -137,7 +144,43 @@ public class Order implements Serializable {
     private Long status;
 
     @Column(name = "flag")
-    private Long flag;
+    private long flag;
+
+    /**
+     * 是否留评
+     */
+    @Column(name = "isLP")
+    private String isLP;
+
+    /**
+     * 是否需要提供到货拍照
+     */
+    @Column(name = "isDHPZ")
+    private String isDHPZ;
+
+    /**
+     * 是否换仓
+     */
+    @Column(name = "isHC")
+    private String isHC;
+
+    /**
+     * 是否回收
+     */
+    @Column(name = "isHS")
+    private String isHS;
+
+    /**
+     * 数量
+     */
+    @Column(name = "orderCount")
+    private int orderCount;
+
+    /**
+     * 天数
+     */
+    @Column(name = "dayCount")
+    private int dayCount;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
     @Column(name = "createTime")
@@ -146,12 +189,6 @@ public class Order implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
     @Column(name = "updateTime")
     private Date updateTime;
-
-    @Transient
-    private int orderCount;
-
-    @Transient
-    private int dayCount;
 
     // 扩展字段
     /**
@@ -206,13 +243,16 @@ public class Order implements Serializable {
      * 实际评论日期
      */
     @Transient
-    private Date reviewDateTime;
+    private String reviewDateTime;
 
     /**
      * 计划评论日期
      */
     @Transient
-    private Date reviewPlanDateTime;
+    private String reviewPlanDateTime;
+
+    @Transient
+    private String statusText;
 
     public Long getId() {
         return id;
@@ -350,19 +390,19 @@ public class Order implements Serializable {
         this.xdUser = xdUser;
     }
 
-    public Date getXdDateTime() {
+    public String getXdDateTime() {
         return xdDateTime;
     }
 
-    public void setXdDateTime(Date xdDateTime) {
+    public void setXdDateTime(String xdDateTime) {
         this.xdDateTime = xdDateTime;
     }
 
-    public Date getRecDateTime() {
+    public String getRecDateTime() {
         return recDateTime;
     }
 
-    public void setRecDateTime(Date recDateTime) {
+    public void setRecDateTime(String recDateTime) {
         this.recDateTime = recDateTime;
     }
 
@@ -486,19 +526,19 @@ public class Order implements Serializable {
         this.reviewUserName = reviewUserName;
     }
 
-    public Date getReviewDateTime() {
+    public String getReviewDateTime() {
         return reviewDateTime;
     }
 
-    public void setReviewDateTime(Date reviewDateTime) {
+    public void setReviewDateTime(String reviewDateTime) {
         this.reviewDateTime = reviewDateTime;
     }
 
-    public Date getReviewPlanDateTime() {
+    public String getReviewPlanDateTime() {
         return reviewPlanDateTime;
     }
 
-    public void setReviewPlanDateTime(Date reviewPlanDateTime) {
+    public void setReviewPlanDateTime(String reviewPlanDateTime) {
         this.reviewPlanDateTime = reviewPlanDateTime;
     }
 
@@ -516,5 +556,65 @@ public class Order implements Serializable {
 
     public void setDayCount(int dayCount) {
         this.dayCount = dayCount;
+    }
+
+    public void setFlag(long flag) {
+        this.flag = flag;
+    }
+
+    public String getIsLP() {
+        return isLP;
+    }
+
+    public void setIsLP(String isLP) {
+        this.isLP = isLP;
+    }
+
+    public String getIsDHPZ() {
+        return isDHPZ;
+    }
+
+    public void setIsDHPZ(String isDHPZ) {
+        this.isDHPZ = isDHPZ;
+    }
+
+    public String getIsHC() {
+        return isHC;
+    }
+
+    public void setIsHC(String isHC) {
+        this.isHC = isHC;
+    }
+
+    public String getIsHS() {
+        return isHS;
+    }
+
+    public void setIsHS(String isHS) {
+        this.isHS = isHS;
+    }
+
+    public String getCashBackTypeText() {
+        return cashBackTypeText;
+    }
+
+    public void setCashBackTypeText(String cashBackTypeText) {
+        this.cashBackTypeText = cashBackTypeText;
+    }
+
+    public String getRecoverCommission() {
+        return recoverCommission;
+    }
+
+    public void setRecoverCommission(String recoverCommission) {
+        this.recoverCommission = recoverCommission;
+    }
+
+    public String getStatusText() {
+        return statusText;
+    }
+
+    public void setStatusText(String statusText) {
+        this.statusText = statusText;
     }
 }

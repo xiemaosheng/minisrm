@@ -1,5 +1,5 @@
 /**
- * 用户管理
+ * 未分配
  */
 var pageCurr;
 var form;
@@ -12,13 +12,16 @@ $(function() {
             elem: '#orderTable',
             url:'/rec/order/all/selectByPage',
             method: 'post', //默认：get请求
-            cellwidth: 100,
+            cellMinWidth: 80,
             limit:10,
             limits:[10,20,30,40,50],
             page: true,
             request: {
                 pageName: 'offset', //页码的参数名称，默认：pageNum
                 limitName: 'limit' //每页数据量的参数名，默认：pageSize
+            },
+            where : {
+                status : 0
             },
             response:{
                 statusName: 'code', //数据状态的字段名称，默认：code
@@ -76,6 +79,7 @@ $(function() {
                 //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
                 //console.log(res);
                 //得到当前页码
+                console.log(curr);
                 $("[data-field='userStatus']").children().each(function(){
                     if($(this).text()=='1'){
                         $(this).text("启用")
@@ -98,9 +102,9 @@ $(function() {
             } else if(obj.event === 'edit'){
                 //编辑
                 edit(data,"编辑订单");
-            }else if(obj.event === 'cancel'){
-                //取消
-                cancel(data,data.id);
+            }else if(obj.event === 'recover'){
+                //恢复
+                recoverUser(data,data.id);
             }
         });
 
@@ -185,7 +189,7 @@ function edit(data,title){
         fixed: false,
         resize: false,
         shadeClose: true,
-         area: ['1600px','1050px'],
+         area: ['1200px','900px'],
         content:  '/rec/order/edit/' + data.id,
         end: function(){
             cleanUser();
@@ -200,7 +204,7 @@ function find(id,title) {
             fixed: false,
             resize: false,
             shadeClose: true,
-            area: ['1600px','1050px'],
+            area: ['1200px','900px'],
             content: "/rec/order/find/" + id,
             end: function(){
                 cleanUser();
@@ -226,13 +230,13 @@ function downUser(obj,id,name) {
                     layer.closeAll();
                 });
 }
-//取消
-function cancel(obj,id) {
+//恢复
+function recoverUser(obj,id) {
     if(null!=id){
-        layer.confirm('您确定要恢取消？', {
+        layer.confirm('您确定要恢复吗？', {
             btn: ['确认','返回'] //按钮
         }, function(){
-            $.post("/rec/order/updateStatus/" + id + "/" +1,function(data){
+            $.post("/admin/list/user/updateUserStatus",{"id":id,"userStatus":1},function(data){
                 if (data.code == 200) {
                     layer.alert(data.message,function(){
                         layer.closeAll();

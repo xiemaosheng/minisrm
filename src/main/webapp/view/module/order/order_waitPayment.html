@@ -10,7 +10,6 @@
     <link th:href="@{/static/css/font.css}" rel="stylesheet"/>
     <link th:href="@{/static/css/xadmin.css}" rel="stylesheet"/>
     <link th:href= "@{/static/lib/layui/css/layui.css}" rel="stylesheet" media="all">
-
     <style>
       .layui-table-cell {height: auto;line-height: 20px;}
       .layui-icon{margin-top: 20px;}
@@ -19,7 +18,7 @@
     <script type="text/javascript" th:src="@{/static/js/plugin/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/static/js/plugin/xadmin.js}"></script>
     <script type="text/javascript" th:src="@{/static/lib/layui/layui.js}"></script>
-    <script type="text/javascript" th:src="@{/static/js/module/order/order_all.js}"></script>
+    <script type="text/javascript" th:src="@{/static/js/module/order/order_waitPayment.js}"></script>
     <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
     <!--[if lt IE 9]>
       <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
@@ -74,17 +73,13 @@
           </tr>
         </thead>
       </table>
-      <xblock>
-        <!-- <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button> -->
-        <button class="layui-btn" onclick="x_admin_show('添加用户','/rec/order/html/add')"><i class="layui-icon"></i>添加</button>
-      </xblock>
       <table class="orderTable" id="orderTable" lay-filter="orderTable">
       </table>
 
       <script type="text/html" id="optBar">
         <a class="layui-btn layui-btn-xs" lay-event="find">查看</a>
         <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-        <a class="layui-btn layui-btn-xs" lay-event="cancel">取消</a>
+        <a class="layui-btn layui-btn-xs" lay-event="opt">付款</a>
       </script>
 
     </div>

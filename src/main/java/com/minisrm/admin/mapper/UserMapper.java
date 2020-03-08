@@ -14,13 +14,14 @@ public interface UserMapper extends BaseMapper<User> {
      * @param user
      * @return
      */
-    List<User> selectList(@Param("condition") User user, @Param("orderBy") String orderBy);
+    List<User> selectList(@Param("condition") User user, @Param("start") int start, @Param("offset") int offset,
+                          @Param("orderBy") String orderBy);
 
     User getLoginUser(@Param("userName") String userName, @Param("password") String password);
 
-    List<User> selectAll();
+    Long countTotal(@Param("condition") User user);
 
-    Long count(@Param("condition") User user);
+    List<User> selectAll();
 
     int save(@Param("condition") User user);
 

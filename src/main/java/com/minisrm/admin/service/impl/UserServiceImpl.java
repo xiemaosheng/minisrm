@@ -30,13 +30,18 @@ public class UserServiceImpl implements UserService {
         PageHelper.startPage(page);
         User user = queryMap.getEntity();
         List<User> list = new ArrayList<>();
-        list = userMapper.selectList(user, page.getOrderBy());
-        return new Result<>(new PageInfo<>(list));
+        list = userMapper.selectList(user,
+                (page.getPageNum() - 1) * page.getPageSize(),
+                page.getPageSize(), page.getOrderBy());
+        Long count = userMapper.countTotal(user);
+        PageInfo<User> pageInfo = new PageInfo<>(list);
+        pageInfo.setTotal(count);
+        return new Result<>(pageInfo);
     }
 
     @Override
-    public List<User> selectList(User user, String orderBy) {
-        return userMapper.selectList(user, orderBy);
+    public List<User> selectList(User user, int offset, int limit, String orderBy) {
+        return userMapper.selectList(user, offset, limit, orderBy);
     }
 
     @Override
@@ -50,8 +55,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Long count(User condition) {
-        return userMapper.count(condition);
+    public Long countTotal(User condition) {
+        return userMapper.countTotal(condition);
     }
 
     @Override

@@ -24,4 +24,8 @@ public interface OrderMapper extends BaseMapper<Order> {
     List<Order> selectAll();
 
     Order findById(@Param("id") Long id);
+
+    void updateStatus(@Param("id") Long id, @Param("status") Long status);
+
+    void updateByCondition(@Param("condition") Order order);
 }

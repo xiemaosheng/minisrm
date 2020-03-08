@@ -52,6 +52,7 @@
                     </td>
                     <td>
                         <input type="hidden" name="id" id="id" th:value="${order.id}">
+                        <input type="hidden" name="status" id="status" th:value="${order.status}">
                         <input type="text" name="mktName" id="mktName" required lay-verify="required" placeholder="请输入店铺名"
                                autocomplete="off" class="layui-input" th:value="${order.mktName}">
                     </td>
@@ -59,9 +60,13 @@
                 <tr>
                     <td>
                         添加商品图片
+                        <button type="button">
+                            <i class="layui-icon">&#xe67c;</i>点击黏贴
+                        </button>
                     </td>
                     <td>
-                        <input type="text" name="goodImgUrl" id="goodImgUrl"/>
+                        <input type="hidden" name="goodImgUrl" id="goodImgUrl" th:value="${order.goodImgUrl}"/>
+                        <img th:src="${order.goodImgUrl}" id="preImg"/>
                         <button type="button" class="layui-btn" id="uploadPicture">
                             <i class="layui-icon">&#xe67c;</i>上传图片
                         </button>
@@ -128,7 +133,7 @@
                     </td>
                     <td>
                         <select name="cashBackType" id="cashBackType" lay-verify="required">
-                            <option th:value="${order.cashBackType}" th:text="${order.cashBackType}" selected/>
+                            <option th:value="${order.cashBackType}" th:text="${order.cashBackTypeText}" selected/>
                             <option value="0">先评后返(上评后返全款)</option>
                             <option value="1">先本后佣(下单返本金,留评返佣金)</option>
                             <option value="2">PP返款</option>
@@ -151,8 +156,6 @@
                     <td>
                         <select name="workingType" id="workingType" lay-verify="required">
                             <option th:value="${order.workingType}" th:text="${order.workingType}" selected/>
-                            <option value="全职">全职</option>
-                            <option value="兼职">兼职</option>
                         </select>
                     </td>
                 </tr>
@@ -175,13 +178,13 @@
                         下单要求
                     </td>
                     <td>
-                        <textarea name="xdRequirement" id="xdRequirement" class="layui-textarea" th:value="${order.xdRequirement}"></textarea>
+                        <textarea name="xdRequirement" id="xdRequirement" class="layui-textarea" th:text="${order.xdRequirement}"></textarea>
                     </td>
                     <td>
                         备注
                     </td>
                     <td>
-                        <textarea name="remark" id="remark" class="layui-textarea" th:value="${order.remark}"></textarea>
+                        <textarea name="remark" id="remark" class="layui-textarea" th:text="${order.remark}"></textarea>
                     </td>
                 </tr>
                 <tr>
@@ -189,18 +192,20 @@
                         是否留评
                     </td>
                     <td>
-                        <select name="isComment" lay-verify="required">
-                            <option value="0" selected>否</option>
-                            <option value="1">是</option>
+                        <select name="isLP" lay-verify="required">
+                            <option th:value="${order.isLP}" th:text="${order.isLP}" selected/>
+                            <option value="否" selected>否</option>
+                            <option value="是">是</option>
                         </select>
                     </td>
                     <td>
                         是否需要提供到货拍照
                     </td>
                     <td>
-                        <select name="isPhoto" lay-verify="required">
-                            <option value="0" selected>否</option>
-                            <option value="1">是</option>
+                        <select name="isDHPZ" lay-verify="required">
+                            <option th:value="${order.isDHPZ}" th:text="${order.isDHPZ}" selected/>
+                            <option value="否" selected>否</option>
+                            <option value="是">是</option>
                         </select>
                     </td>
                 </tr>
@@ -209,21 +214,23 @@
                         是否换仓
                     </td>
                     <td>
-                        <select name="isChange" lay-verify="required">
-                            <option value="0" selected>否</option>
-                            <option value="1">是</option>
+                        <select name="isHC" lay-verify="required">
+                            <option th:value="${order.isHC}" th:text="${order.isHC}" selected/>
+                            <option value="否" selected>否</option>
+                            <option value="是">是</option>
                         </select>
                     </td>
                     <td>
                         是否回收
                     </td>
                     <td>
-                        <select name="isRecover" lay-verify="required">
-                            <option value="0" selected>否</option>
-                            <option value="1">是</option>
+                        <select name="isHS" lay-verify="required">
+                            <option th:value="${order.isHS}" th:text="${order.isHS}" selected/>
+                            <option value="否" selected>否</option>
+                            <option value="是">是</option>
                         </select>
                         回收佣金
-                        <input type="text" name="recoverCommission" required lay-verify="required" placeholder=""
+                        <input type="text" name="recoverCommission" placeholder=""
                                autocomplete="off" class="layui-input">
                     </td>
                 </tr>
@@ -232,7 +239,7 @@
                         评论标题
                     </td>
                     <td>
-                        <input type="text" name="title" id="title" required lay-verify="required" placeholder=""
+                        <input type="text" name="title" id="title" placeholder=""
                                autocomplete="off" class="layui-input">
                     </td>
                     <td>
@@ -247,6 +254,8 @@
                         评论图片
                     </td>
                     <td>
+                        <input type="hidden" name="reviewImgUrl" id="reviewImgUrl"/>
+                        <img th:src="${order.reviewImgUrl}" id="preReviewImg"/>
                         <button type="button" class="layui-btn" id="uploadCommentPicture">
                             <i class="layui-icon">&#xe67c;</i>上传图片
                         </button>
@@ -255,6 +264,10 @@
                         评论视频
                     </td>
                     <td>
+                        <input type="hidden" name="reviewVideoUrl" id="reviewVideoUrl"/>
+                        <video width="120" height="60" controls="controls">
+                            <source th:src="${order.reviewVideoUrl}" type="video/mp4" id="preReviewVideo"/>
+                        </video>
                         <button type="button" class="layui-btn" id="uploadCommentVideo">
                             <i class="layui-icon">&#xe67c;</i>上传视频
                         </button>
@@ -273,23 +286,9 @@
             $ = layui.jquery;
             var form = layui.form
             ,layer = layui.layer,upload = layui.upload,laydate = layui.laydate;
-            //自定义验证规则
-            form.verify({
-                nikename: function(value){
-                if(value.length < 5){
-                    return '昵称至少得5个字符啊';
-                }
-                }
-                ,pass: [/(.+){6,12}$/, '密码必须6到12位']
-                ,repass: function(value){
-                    if($('#L_pass').val()!=$('#L_repass').val()){
-                        return '两次密码不一致';
-                    }
-                }
-            });
+
             //监听提交
             form.on('submit(add)', function(data){
-                console.log(data);
                 //发异步，把数据提交给php
                 layer.alert("增加成功", {icon: 6},function () {
                     // 获得frame索引
@@ -314,9 +313,11 @@
             });
             var uploadCommentPicture = upload.render({
                 elem: '#uploadCommentPicture' //绑定元素
-                ,url: '/file/upload' //上传接口
+                ,url: '/file/upload/commentPicture' //上传接口
                 ,done: function(res){
                 //上传完毕回调
+                 $("#reviewImgUrl").val(res.fileName);
+                 document.getElementById("preReviewImg").src= res.fileName;
                 }
                 ,error: function(){
                 //请求异常回调
@@ -324,22 +325,56 @@
             });
             var uploadCommentVideo = upload.render({
                 elem: '#uploadCommentVideo' //绑定元素
-                ,url: '/file/upload' //上传接口
+                ,url: '/file/upload/commentVideo' //上传接口
                 ,done: function(res){
                 //上传完毕回调
+                 $("#reviewVideoUrl").val(res.fileName);
+                 document.getElementById("preReviewVideo").src= res.fileName;
                 }
                 ,error: function(){
                 //请求异常回调
                 }
             });
             //日期选择器
-            laydate.render({ 
-                elem: '#takeOrderDate'
+            laydate.render({
+                elem: '#recDateTime'
             });
-            laydate.render({ 
-                elem: '#commentDate'
+            laydate.render({
+                elem: '#reviewPlanDateTime'
             });
         });
+
+
+            document.addEventListener('paste', function (event) {
+            var items = (event.clipboardData && event.clipboardData.items) || [];
+            var file = null;
+
+            if (items && items.length) {
+                for (var i = 0; i < items.length; i++) {
+                    if (items[i].type.indexOf('image') !== -1) {
+                        file = items[i].getAsFile();
+                        break;
+                    }
+                }
+            }
+
+            var fd = new FormData(document.forms[0]);
+            fd.append("file", file, 'image.png');
+            //创建XMLHttpRequest对象
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST','/file/upload',true);
+            // 上传成功后，在回调函数中设置前端预览
+            xhr.onload = function() {
+                document.getElementById("preImg").src= URL.createObjectURL(file);
+                var data = JSON.parse( xhr.responseText );
+                $("#goodImgUrl").val(data.fileName);
+             };
+            xhr.send(fd);
+
+            if (file.size === 0) {
+               return;
+             }
+       });
 
 </script>
 </body>

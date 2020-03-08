@@ -9,18 +9,20 @@
         <result column="email" property="email"/>
         <result column="userMobile" property="userMobile"/>
         <result column="userStatus" property="userStatus"/>
+        <result column="workerType" property="workerType"/>
         <result column="password" property="password"/>
         <result column="createTime" property="createTime"/>
         <result column="updateTime" property="updateTime"/>
     </resultMap>
 
-    <insert id="save" useGeneratedKeys="true" keyProperty="condition.id"  keyColumn="id">
-        insert into srm_user (userName,userMobile,email,userStatus,password,createTime,updateTime)
+    <insert id="save" useGeneratedKeys="true" keyProperty="condition.id" keyColumn="id">
+        insert into srm_user (userName,userMobile,email,userStatus,password,workerType,createTime,updateTime)
         values (#{condition.userName},
         #{condition.userMobile},
         #{condition.email},
         #{condition.userStatus},
         #{condition.password},
+        #{condition.workerType},
         #{condition.createTime},
         #{condition.updateTime})
     </insert>
@@ -35,7 +37,7 @@
         WHERE id = #{userId}
     </update>
 
-    <delete id ="deleteById">
+    <delete id="deleteById">
         delete srm_user
         where id = #{userId}
     </delete>
@@ -60,6 +62,20 @@
                 updateTime desc
             </otherwise>
         </choose>
+        limit ${start},${offset}
+    </select>
+
+    <select id="countTotal" resultType="long">
+        SELECT
+        count(1)
+        FROM
+        srm_user t
+        INNER JOIN srm_user_role ur ON t.id = ur.userId
+        INNER JOIN srm_role r on r.id = ur.roleId
+        where 1=1
+        <if test="condition.userName != null and condition.userName != ''">
+            and t.userName like '%' || #{condition.userName} || '%'
+        </if>
     </select>
 
     <select id="getLoginUser" resultMap="BaseResultMap">

@@ -19,6 +19,7 @@ public class ShiroUser implements Serializable {
     public String name; // 姓名
     public List<String> roleList; // 角色集
     public String deptName; // 部门名称
+    public String workerType;
     public List<String> roleNames; // 角色名称集
 
     public Set<String> permission;
@@ -91,4 +92,11 @@ public class ShiroUser implements Serializable {
         this.permission = permission;
     }
 
+    public String getWorkerType() {
+        return workerType;
+    }
+
+    public void setWorkerType(String workerType) {
+        this.workerType = workerType;
+    }
 }

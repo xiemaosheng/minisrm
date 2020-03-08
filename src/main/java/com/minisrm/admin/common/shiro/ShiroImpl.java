@@ -64,6 +64,7 @@ public class ShiroImpl implements Shiro {
             base.setUserName(user.getUserName());
             base.setRoleStatus(1);
             base.setStatus(1);
+            base.setWorkerType(user.getWorkerType());
         }
         return base;
     }
@@ -88,6 +89,7 @@ public class ShiroImpl implements Shiro {
         shiroUser.setRoleList(roleList);
         shiroUser.setRoleNames(roleNameList);
         shiroUser.setToken(user.getToken());
+        shiroUser.setWorkerType(user.getWorkerType());
 
 
         List<Menu> menuList = menuMapper.getMenuListById(user.getUserId());
@@ -120,7 +122,7 @@ public class ShiroImpl implements Shiro {
                 if (menuMap.containsKey(menu.getId())) {
                     menu.setSubMenuList(menuMap.get(menu.getId()));
                 }
-                if (menu.getLevel() == 0){
+                if (menu.getLevel() == 0) {
                     list.add(menu);
                 }
             }

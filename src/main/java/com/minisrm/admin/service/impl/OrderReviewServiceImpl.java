@@ -16,4 +16,14 @@ public class OrderReviewServiceImpl implements OrderReviewService {
     public int save(OrderReview orderReview) {
         return orderReviewMapper.save(orderReview);
     }
+
+    @Override
+    public void updateByCondition(OrderReview orderReview) {
+        orderReviewMapper.updateByCondition(orderReview);
+    }
+
+    @Override
+    public Long countByOrderId(Long orderId) {
+        return orderReviewMapper.countByOrderId(orderId);
+    }
 }

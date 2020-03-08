@@ -28,7 +28,7 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminController extends BaseController {
 
-    private final static String PREFIX = "/module/admin";
+    private final static String PREFIX = "module/admin";
 
     @Autowired
     private UserService userService;

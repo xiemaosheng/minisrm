@@ -26,6 +26,9 @@ $(function() {
                 countName: 'total', //数据总数的字段名称，默认：count
                 dataName: 'rows' //数据列表的字段名称，默认：data
             },
+            where : {
+                status : 0
+            },
             cols: [[
                 {type: 'checkbox'}
                 ,{field:'id', title:'编号',align:'center',width:60}
@@ -43,7 +46,7 @@ $(function() {
                                                                      '店铺：<span style="color: #c00;">'+ d.mktName +'</span></br>' +
                                                                      '卖家：<span style="color: #c00;">'+ d.sellerWXQQ +'</span></br>' +
                                                                      '类型：<span style="color: #c00;">'+ d.sellerOrderType +'</span></br>' +
-                                                                     '订单号：<span style="color: #c00;">'+ (d.goodOrderNum == 'undefined' ? '无':d.goodOrderNum) +'</span></br>'
+                                                                     '订单号：<span style="color: #c00;">'+ d.goodOrderNum +'</span></br>'
                                                                      + '</div>'
                                                                    }
                                                                  }
@@ -53,7 +56,7 @@ $(function() {
                                                                      '下单金额：<span style="color: #c00;">'+ d.xdPrice +'</span></br>' +
                                                                      '</div>'
                                                                         }}
-                 ,{field:'workerName', title: '员工信息',align:'left',width:150,templet: function(d){
+            ,{field:'workerName', title: '员工信息',align:'left',width:150,templet: function(d){
                                                                       return '<div>' +
                                                                       '员工代码：<span style="color: #c00;">'+ d.workerName +'</span></br>' +
                                                                       '购买ID：<span style="color: #c00;">'+ d.workerName +'</span></br>' +
@@ -76,6 +79,7 @@ $(function() {
                 //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
                 //console.log(res);
                 //得到当前页码
+                console.log(curr);
                 $("[data-field='userStatus']").children().each(function(){
                     if($(this).text()=='1'){
                         $(this).text("启用")
@@ -185,7 +189,7 @@ function edit(data,title){
         fixed: false,
         resize: false,
         shadeClose: true,
-         area: ['1600px','1050px'],
+         area: ['1000px','800px'],
         content:  '/rec/order/edit/' + data.id,
         end: function(){
             cleanUser();
@@ -200,7 +204,7 @@ function find(id,title) {
             fixed: false,
             resize: false,
             shadeClose: true,
-            area: ['1600px','1050px'],
+            area: ['1200px','900px'],
             content: "/rec/order/find/" + id,
             end: function(){
                 cleanUser();

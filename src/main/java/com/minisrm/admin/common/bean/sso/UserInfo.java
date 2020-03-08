@@ -10,6 +10,7 @@ public class UserInfo {
     private String roleName;
     private Integer roleStatus;
     private String token;
+    private String workerType;
 
     public Long getUserId() {
         return userId;
@@ -67,4 +68,11 @@ public class UserInfo {
         this.token = token;
     }
 
+    public String getWorkerType() {
+        return workerType;
+    }
+
+    public void setWorkerType(String workerType) {
+        this.workerType = workerType;
+    }
 }

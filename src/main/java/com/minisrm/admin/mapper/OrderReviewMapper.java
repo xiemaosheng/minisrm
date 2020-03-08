@@ -9,5 +9,9 @@ import java.util.List;
 import java.util.Map;
 
 public interface OrderReviewMapper extends BaseMapper<OrderReview> {
-    int save(OrderReview orderReview);
+    int save(@Param("condition") OrderReview orderReview);
+
+    void updateByCondition(@Param("condition") OrderReview orderReview);
+
+    long countByOrderId(@Param("orderId") Long orderId);
 }

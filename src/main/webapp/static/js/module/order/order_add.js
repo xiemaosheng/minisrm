@@ -28,12 +28,7 @@ $(function() {
               console.log(data);
               //发异步，把数据提交给php
               formSubmit(data);
-              layer.alert("增加成功", {icon: 6},function () {
-                  // 获得frame索引
-                  var index = parent.layer.getFrameIndex(window.name);
-                  //关闭当前frame
-                  parent.layer.close(index);
-              });
+
               return false;
             });
           });
@@ -46,12 +41,15 @@ function formSubmit(obj){
         url: "/rec/order/save",
         success: function (data) {
             if (data.code == 200) {
-                layer.alert(data.msg,function(){
+                layer.alert(data.message,function(){
                     layer.closeAll();
+                    window.parent.layer.closeAll();
                 });
             } else {
-                layer.alert(data.msg);
+                layer.alert(data.message);
+                 window.parent.layer.closeAll();
             }
+
         },
         error: function () {
             layer.alert("操作请求错误，请您稍后再试",function(){

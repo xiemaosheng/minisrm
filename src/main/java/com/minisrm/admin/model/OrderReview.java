@@ -74,13 +74,13 @@ public class OrderReview implements Serializable {
      * 实际评论日期
      */
     @Column(name = "reviewDateTime")
-    private Date reviewDateTime;
+    private String reviewDateTime;
 
     /**
      * 计划评论日期
      */
     @Column(name = "reviewPlanDateTime")
-    private Date reviewPlanDateTime;
+    private String reviewPlanDateTime;
 
     /**
      * 创建时间
@@ -174,19 +174,19 @@ public class OrderReview implements Serializable {
         this.reviewUserName = reviewUserName;
     }
 
-    public Date getReviewDateTime() {
+    public String getReviewDateTime() {
         return reviewDateTime;
     }
 
-    public void setReviewDateTime(Date reviewDateTime) {
+    public void setReviewDateTime(String reviewDateTime) {
         this.reviewDateTime = reviewDateTime;
     }
 
-    public Date getReviewPlanDateTime() {
+    public String getReviewPlanDateTime() {
         return reviewPlanDateTime;
     }
 
-    public void setReviewPlanDateTime(Date reviewPlanDateTime) {
+    public void setReviewPlanDateTime(String reviewPlanDateTime) {
         this.reviewPlanDateTime = reviewPlanDateTime;
     }
 

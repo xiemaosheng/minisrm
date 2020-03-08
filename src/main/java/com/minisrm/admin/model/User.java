@@ -29,6 +29,9 @@ public class User implements Serializable {
     @Column(name = "userStatus")
     private Integer userStatus;
 
+    @Column(name = "workerType")
+    private String workerType;
+
     private String roleName;
 
     @Transient
@@ -120,5 +123,13 @@ public class User implements Serializable {
 
     public void setRoleId(Long roleId) {
         this.roleId = roleId;
+    }
+
+    public String getWorkerType() {
+        return workerType;
+    }
+
+    public void setWorkerType(String workerType) {
+        this.workerType = workerType;
     }
 }

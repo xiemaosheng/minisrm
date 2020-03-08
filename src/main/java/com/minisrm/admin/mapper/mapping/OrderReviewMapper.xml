@@ -20,6 +20,10 @@
         <result column="updateTime" property="updateTime"/>
     </resultMap>
 
+    <select id="countByOrderId" resultType="long">
+        select count(1) from srm_order_review
+        where orderId = #{orderId}
+    </select>
 
     <insert id="save" useGeneratedKeys="true" keyProperty="condition.id"  keyColumn="id">
         insert into srm_order_review (orderId,
@@ -49,4 +53,21 @@
         #{condition.createTime},
         #{condition.updateTime})
     </insert>
+
+    <update id="updateByCondition">
+        update srm_order_review
+        <trim prefix="set" suffixOverrides=",">
+            <if test="condition.title != null">title=#{condition.title},</if>
+            <if test="condition.content != null">content=#{condition.content},</if>
+            <if test="condition.reviewImgUrl != null">reviewImgUrl=#{condition.reviewImgUrl},</if>
+            <if test="condition.reviewVideoUrl != null">reviewVideoUrl=#{condition.reviewVideoUrl},</if>
+            <if test="condition.reviewLinkUrl != null">reviewLinkUrl=#{condition.reviewLinkUrl},</if>
+            <if test="condition.reviewUserId != null">reviewUserId=#{condition.reviewUserId},</if>
+            <if test="condition.reviewUserName != null">reviewUserName=#{condition.reviewUserName},</if>
+            <if test="condition.reviewDateTime != null">cashBackType=#{condition.reviewDateTime},</if>
+            <if test="condition.reviewPlanDateTime != null">reviewPlanDateTime=#{condition.reviewPlanDateTime},</if>
+            <if test="condition.updateTime != null">updateTime=#{condition.updateTime},</if>
+        </trim>
+        where orderId = #{condition.orderId}#
+    </update>
 </mapper>
