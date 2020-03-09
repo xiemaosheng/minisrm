@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>欢迎页面-L-admin1.0</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>
+    <link rel="shortcut icon" th:href="@{/static/img/images/favicon.ico}" type="image/x-icon"/>
+    <link th:href="@{/static/css/font.css}" rel="stylesheet"/>
+    <link th:href="@{/static/css/xadmin.css}" rel="stylesheet"/>
+    <script type="text/javascript" th:src="@{/static/js/plugin/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/static/js/plugin/xadmin.js}"></script>
+    <script type="text/javascript" th:src="@{/static/lib/layui/layui.js}"></script>
+    <script type="text/javascript" th:src="@{/static/lib/layui/layui.all.js}"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+
+    <![endif]-->
+</head>
+
+<body>
+<div>
+    <input type="hidden" name="xdJtUrl" id="xdJtUrl"/>
+    <div contenteditable="true" id="test1"><img th:src="${order.xdJtUrl}" id="preXdJtImg"/></div>
+</div>
+<script>
+        layui.use(['form','layer','upload','laydate'], function(){
+            $ = layui.jquery;
+            var form = layui.form
+            ,layer = layui.layer,upload = layui.upload,laydate = layui.laydate;
+
+            //监听提交
+            form.on('submit(add)', function(data){
+                //发异步，把数据提交给php
+                layer.alert("增加成功", {icon: 6},function () {
+                    // 获得frame索引
+                    var index = parent.layer.getFrameIndex(window.name);
+                    //关闭当前frame
+                    parent.layer.close(index);
+                });
+                return false;
+            });
+            //执行实例
+            var uploadPicture = upload.render({
+                elem: '#uploadXdPicture' //绑定元素
+                ,url: '/file/upload' //上传接口
+                ,done: function(res,index,upload){
+                    //上传完毕回调
+                    $("#xdJtUrl").val(res.fileName);
+                    document.getElementById("preXdJtImg").src= res.fileName;
+                }
+                ,error: function(){
+                //请求异常回调
+                }
+            });
+            var uploadCommentPicture = upload.render({
+                elem: '#uploadXdPayedPicture' //绑定元素
+                ,url: '/file/upload/commentPicture' //上传接口
+                ,done: function(res){
+                //上传完毕回调
+                 $("#xdPayedJtUrl").val(res.fileName);
+                 document.getElementById("preXdPayedImg").src= res.fileName;
+                }
+                ,error: function(){
+                //请求异常回调
+                }
+            });
+
+            //日期选择器
+            laydate.render({
+                elem: '#recDateTime'
+            });
+            laydate.render({
+                elem: '#reviewPlanDateTime'
+            });
+        });
+
+        var xdJtUrl =document.getElementById("xdJtUrl")
+        var xdJtUrlEditor = CodeMirror.fromTextArea(xdJtUrl, {
+          lineNumbers: true
+        });
+        document.getElementById("test1").addEventListener("paste", function (event) {
+            var items = (event.clipboardData && event.clipboardData.items) || [];
+            var file = null;
+
+            if (items && items.length) {
+                for (var i = 0; i < items.length; i++) {
+                    if (items[i].type.indexOf('image') !== -1) {
+                        file = items[i].getAsFile();
+                        break;
+                    }
+                }
+            }
+
+            var fd = new FormData(document.forms[0]);
+            fd.append("file", file, 'image.png');
+            //创建XMLHttpRequest对象
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST','/file/upload',true);
+            // 上传成功后，在回调函数中设置前端预览
+            xhr.onload = function() {
+                document.getElementById("preXdJtImg").src= URL.createObjectURL(file);
+                var data = JSON.parse( xhr.responseText );
+                $("#xdJtUrl").val(data.fileName);
+             };
+            xhr.send(fd);
+
+            if (file.size === 0) {
+               return;
+             }
+        });
+
+        var xdPayedJtUrl =document.getElementById("xdPayedJtUrl")
+        var xdPayedJtUrlEditor = CodeMirror.fromTextArea(xdPayedJtUrl, {
+          lineNumbers: true
+        });
+       document.getElementById("test2").addEventListener("paste", function (event) {
+            var items = (event.clipboardData && event.clipboardData.items) || [];
+            var file = null;
+
+            if (items && items.length) {
+                for (var i = 0; i < items.length; i++) {
+                    if (items[i].type.indexOf('image') !== -1) {
+                        file = items[i].getAsFile();
+                        break;
+                    }
+                }
+            }
+
+            var fd = new FormData(document.forms[0]);
+            fd.append("file", file, 'image.png');
+            //创建XMLHttpRequest对象
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST','/file/upload',true);
+            // 上传成功后，在回调函数中设置前端预览
+            xhr.onload = function() {
+                document.getElementById("preXdPayedImg").src= URL.createObjectURL(file);
+                var data = JSON.parse( xhr.responseText );
+                $("#xdPayedJtUrl").val(data.fileName);
+             };
+            xhr.send(fd);
+
+            if (file.size === 0) {
+               return;
+             }
+        });
+</script>
+</body>
+</html>

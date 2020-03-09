@@ -31,8 +31,8 @@ public class FileController extends BaseController {
         }
         String suffixName = fileName.substring(fileName.lastIndexOf("."));  // 后缀名
         // 上传后的路径
-        String filePath = "D://temp-rainy//";
-//         String filePath = "/opt/pic/goods/";
+//        String filePath = "D://temp-rainy//";
+         String filePath = "/opt/pic/goods/";
         fileName = UUID.randomUUID() + suffixName; // 新文件名
         File dest = new File(filePath + fileName);
         if (!dest.getParentFile().exists()) {
@@ -43,8 +43,8 @@ public class FileController extends BaseController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-//        String filename = "/opt/pic/goods/" + fileName;
-        String filename = filePath + fileName;
+        String filename = "/opt/pic/goods/" + fileName;
+//        String filename = filePath + fileName;
         JSONObject object = new JSONObject();
         object.put("fileName", filename);
         return object;
@@ -62,8 +62,8 @@ public class FileController extends BaseController {
         }
         String suffixName = fileName.substring(fileName.lastIndexOf("."));  // 后缀名
         // 上传后的路径
-        String filePath = "D://temp-rainy//";
-//        String filePath = "/opt/pic/commentPicture/";
+//        String filePath = "D://temp-rainy//";
+        String filePath = "/opt/pic/commentPicture/";
         fileName = UUID.randomUUID() + suffixName; // 新文件名
         File dest = new File(filePath + fileName);
         if (!dest.getParentFile().exists()) {
@@ -74,7 +74,6 @@ public class FileController extends BaseController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-//        String filename = "/opt/pic/commentPicture/" + fileName;
         String filename = filePath + fileName;
         JSONObject object = new JSONObject();
         object.put("fileName", filename);
@@ -93,8 +92,8 @@ public class FileController extends BaseController {
         }
         String suffixName = fileName.substring(fileName.lastIndexOf("."));  // 后缀名
         // 上传后的路径
-        String filePath = "D://temp-rainy//";
-//        String filePath = "/opt/pic/commentVideo/";
+//        String filePath = "D://temp-rainy//";
+        String filePath = "/opt/pic/commentVideo/";
         fileName = UUID.randomUUID() + suffixName; // 新文件名
         File dest = new File(filePath + fileName);
         if (!dest.getParentFile().exists()) {
@@ -105,7 +104,6 @@ public class FileController extends BaseController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-//        String filename = "/opt/pic/commentVideo/" + fileName;
         String filename = filePath + fileName;
         JSONObject object = new JSONObject();
         object.put("fileName", filename);

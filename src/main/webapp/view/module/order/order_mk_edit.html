@@ -44,7 +44,7 @@
                     </td>
                     <td>
                         <input type="hidden" name="id" id="id" th:value="${order.id}">
-                        <input type="hidden" name="status" id="status" th:value="${order.status}">
+                        <input type="hidden" name="status" id="status" value="1">
                         <input type="text" readonly="readonly" name="mktName" id="mktName" required
                                lay-verify="required" placeholder="请输入店铺名"
                                autocomplete="off" class="layui-input" th:value="${order.mktName}">
@@ -80,9 +80,9 @@
                         额外要求
                     </td>
                     <td>
-                        <p th:text="${order.isHC}"></p>
-                        <p th:text="${order.isDHPZ}"></p>
-                        <p th:text="${order.isHS}"></p>
+                        是否留评：<label th:text="${order.isLP}"></label></br>
+                        是否换仓：<label th:text="${order.isHC}"></label></br>
+                        是否回收：<label th:text="${order.isHS}"></label>
                     </td>
 
                 </tr>
@@ -141,26 +141,26 @@
                 <tr>
                     <td>
                         下单截图
-                        <button type="button">
+                        <button type="button" id="xdJt" class="xdJt" onclick="x_admin_show('下单截图','/make/order/html/xdJt')">
                             <i class="layui-icon">&#xe67c;</i>点击黏贴
                         </button>
                     </td>
                     <td>
                         <input type="hidden" name="xdJtUrl" id="xdJtUrl"/>
-                        <img th:src="${order.xdJtUrl}" id="preXdJtImg"/>
+                        <div contenteditable="true" id="test1"><img th:src="${order.xdJtUrl}" id="preXdJtImg"/></div>
                         <button type="button" class="layui-btn" id="uploadXdPicture">
                             <i class="layui-icon">&#xe67c;</i>上传图片
                         </button>
                     </td>
                     <td>
                         下单付款截图
-                        <button type="button">
+                        <button type="button" id="xdPayed" class="xdPayed">
                             <i class="layui-icon">&#xe67c;</i>点击黏贴
                         </button>
                     </td>
                     <td>
                         <input type="hidden" name="xdPayedJtUrl" id="xdPayedJtUrl"/>
-                        <img th:src="${order.xdPayedJtUrl}" id="preXdPayedImg"/>
+                        <div contenteditable="true" id="test2"><img th:src="${order.xdPayedJtUrl}" id="preXdPayedImg"/></div>
                         <button type="button" class="layui-btn" id="uploadXdPayedPicture">
                             <i class="layui-icon">&#xe67c;</i>上传图片
                         </button>
@@ -170,7 +170,7 @@
             </table>
         </div>
         <div class="layui-form-item" style="float: right;">
-            <button class="layui-btn" lay-submit="" lay-filter="edit">修改</button>
+            <button class="layui-btn" lay-submit="" lay-filter="edit">下单</button>
         </div>
     </form>
 </div>
@@ -193,41 +193,30 @@
             });
             //执行实例
             var uploadPicture = upload.render({
-                elem: '#uploadPicture' //绑定元素
+                elem: '#uploadXdPicture' //绑定元素
                 ,url: '/file/upload' //上传接口
                 ,done: function(res,index,upload){
                     //上传完毕回调
-                    $("#goodImgUrl").val(res.fileName);
-                    console.log(res.fileName);
+                    $("#xdJtUrl").val(res.fileName);
+                    document.getElementById("preXdJtImg").src= res.fileName;
                 }
                 ,error: function(){
                 //请求异常回调
                 }
             });
             var uploadCommentPicture = upload.render({
-                elem: '#uploadCommentPicture' //绑定元素
+                elem: '#uploadXdPayedPicture' //绑定元素
                 ,url: '/file/upload/commentPicture' //上传接口
                 ,done: function(res){
                 //上传完毕回调
-                 $("#reviewImgUrl").val(res.fileName);
-                 document.getElementById("preReviewImg").src= res.fileName;
+                 $("#xdPayedJtUrl").val(res.fileName);
+                 document.getElementById("preXdPayedImg").src= res.fileName;
                 }
                 ,error: function(){
                 //请求异常回调
                 }
             });
-            var uploadCommentVideo = upload.render({
-                elem: '#uploadCommentVideo' //绑定元素
-                ,url: '/file/upload/commentVideo' //上传接口
-                ,done: function(res){
-                //上传完毕回调
-                 $("#reviewVideoUrl").val(res.fileName);
-                 document.getElementById("preReviewVideo").src= res.fileName;
-                }
-                ,error: function(){
-                //请求异常回调
-                }
-            });
+
             //日期选择器
             laydate.render({
                 elem: '#recDateTime'
@@ -237,8 +226,11 @@
             });
         });
 
-
-            document.addEventListener('paste', function (event) {
+        var xdJtUrl =document.getElementById("xdJtUrl")
+        var xdJtUrlEditor = CodeMirror.fromTextArea(xdJtUrl, {
+          lineNumbers: true
+        });
+        document.getElementById("test1").addEventListener("paste", function (event) {
             var items = (event.clipboardData && event.clipboardData.items) || [];
             var file = null;
 
@@ -258,18 +250,51 @@
             xhr.open('POST','/file/upload',true);
             // 上传成功后，在回调函数中设置前端预览
             xhr.onload = function() {
-                document.getElementById("preImg").src= URL.createObjectURL(file);
+                document.getElementById("preXdJtImg").src= URL.createObjectURL(file);
                 var data = JSON.parse( xhr.responseText );
-                $("#goodImgUrl").val(data.fileName);
+                $("#xdJtUrl").val(data.fileName);
              };
             xhr.send(fd);
 
             if (file.size === 0) {
                return;
              }
-       });
+        });
 
+        var xdPayedJtUrl =document.getElementById("xdPayedJtUrl")
+        var xdPayedJtUrlEditor = CodeMirror.fromTextArea(xdPayedJtUrl, {
+          lineNumbers: true
+        });
+       document.getElementById("test2").addEventListener("paste", function (event) {
+            var items = (event.clipboardData && event.clipboardData.items) || [];
+            var file = null;
 
+            if (items && items.length) {
+                for (var i = 0; i < items.length; i++) {
+                    if (items[i].type.indexOf('image') !== -1) {
+                        file = items[i].getAsFile();
+                        break;
+                    }
+                }
+            }
+
+            var fd = new FormData(document.forms[0]);
+            fd.append("file", file, 'image.png');
+            //创建XMLHttpRequest对象
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST','/file/upload',true);
+            // 上传成功后，在回调函数中设置前端预览
+            xhr.onload = function() {
+                document.getElementById("preXdPayedImg").src= URL.createObjectURL(file);
+                var data = JSON.parse( xhr.responseText );
+                $("#xdPayedJtUrl").val(data.fileName);
+             };
+            xhr.send(fd);
+
+            if (file.size === 0) {
+               return;
+             }
+        });
 </script>
 </body>
 </html>

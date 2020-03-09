@@ -183,23 +183,18 @@ function find(id,title) {
 
 
 function opt(obj,id) {
-    if(null!=id){
-        layer.confirm('您确定要下单吗？', {
-            btn: ['确认','返回'] //按钮
-        }, function(){
-        parent.layer.open({
-            type: 2,
-            title: '下单编辑',
-            fixed: false,
-            resize: false,
-            shadeClose: true,
-            area: ['900px','600px'],
-            content: "/make/order/edit/" + id,
-            end: function(){
-                cleanUser();
-            }
-        });
-    }
+    parent.layer.open({
+                type: 2,
+                title: '下单编辑',
+                fixed: false,
+                resize: false,
+                shadeClose: true,
+                area: ['1100px','950px'],
+                content: "/make/order/edit/" + id,
+                end: function(){
+                    cleanUser();
+                }
+            });
 }
 
 function load(obj){

@@ -148,6 +148,7 @@
         update srm_order
         <trim prefix="set" suffixOverrides=",">
             <if test="condition.mktName != null">mktName=#{condition.mktName},</if>
+            <if test="condition.status != null">status=#{condition.status},</if>
             <if test="condition.goodImgUrl != null">goodImgUrl=#{condition.goodImgUrl},</if>
             <if test="condition.goodOrderNum != null">goodOrderNum=#{condition.goodOrderNum},</if>
             <if test="condition.sellerWXQQ != null">sellerWXQQ=#{condition.sellerWXQQ},</if>
