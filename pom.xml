@@ -26,7 +26,7 @@
         <kaptcha.version>2.3.2</kaptcha.version>
         <shiro.version>1.4.0</shiro.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <mysql.connector.version>5.1.30</mysql.connector.version>
+        <mysql.connector.version>8.0.16</mysql.connector.version>
     </properties>
 
     <dependencies>
